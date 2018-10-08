@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>高阶函数实现AOP（面向切面编程）</title>
+</head>
+
+<body>
+  <div>
+    <div>beofre和after的实现</div>
+    <a href="https://www.zhihu.com/question/24863332">什么是面向切面编程</a>
+  </div>
+</body>
+<script>
+  Function.prototype.before = function (beforeFn) {
+    let _this = this; // 缓存原函数的引用
+    return function () {
+      beforeFn.apply(this, arguments); // 执行前置函数
+      return _this.apply(this, arguments); // 执行原函数
+    }
+  }
+  Function.prototype.after = function (afterFn) {
+    let _this = this;
+    return function () {
+      let set = _this.apply(this, arguments);
+      afterFn.apply(this, arguments);
+      return set;
+    }
+  }
+  let func = () => {
+    console.log('func');
+    return 1;
+  }
+  func = func.before(() => {
+    console.log('==before==');
+  }).after(() => {
+    console.log('==after==');
+  })
+  console.log(func);
+  console.log(func());;
+
+</script>
+
+</html>
