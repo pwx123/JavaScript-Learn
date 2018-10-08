@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>xmlHttpRequest</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  var requestXML = null;
+
+  function createxmlHttpRequest() {
+    var request = null;
+    if (window.XMLHttpRequest) {
+      request = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+      try {
+        request = new ActiveXObject("Msxml2.XMLHTTP");
+      } catch (error) {
+        try {
+          request = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (error) {
+          alert("初始化失败!");
+        }
+      }
+    }
+    return request;
+  }
+  window.onload = function () {
+    requestXML = createxmlHttpRequest();
+    requestXML.onreadystatechange = updatePage;
+    requestXML.open("GET", "1.html", true);
+    requestXML.send(null);
+  }
+
+  function updatePage() {
+    if (requestXML.readyState == 4) {
+      if (requestXML.status == 200) {
+        console.log(requestXML.status);
+      } else {
+        console.log(requestXML.status);
+      }
+    } else {
+      console.log(requestXML.readystate);
+    }
+  }
+
+</script>
+
+</html>

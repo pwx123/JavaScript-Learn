@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>多态</title>
+</head>
+
+<body>
+  <script>
+    function Parent() {
+      this.name = 'pwx'
+      this.run = function () {
+        console.log("Parent run");
+      }
+    }
+    Parent.prototype.eat = function () {
+      console.log("Parent eat");
+    }
+
+    function Child() {
+      Parent.apply(this); //复制Parent的属性 this生成的
+      console.log(this);
+      var parentRun = this.run; //保留父类方法的引用
+      this.run = function () { //新建自己的引用
+        console.log("Child run");
+        parentRun();
+        console.log(this)
+        console.log(parentRun);
+      }
+    }
+
+    function myCreate(p, c) { //继承函数
+      function F() {}
+      F.prototype = p.prototype;
+      var f = new F();
+      c.prototype = f;
+      c.prototype.constructor = Child; //构造器重新指回Child
+      c.super = p.prototype; //super指向父类的原型 可以调用父类的方法
+    }
+    // Child.prototype = Object.create(Parent.prototype); //自带的继承
+    // Child.prototype.constructor = Child;
+    // Child.super = Parent.prototype;
+
+    myCreate(Parent, Child); //继承
+    Child.prototype.eat = function () {
+      console.log("Child eat");
+      Child.super.eat();
+    }
+
+    var p = new Parent();
+    var c = new Child();
+    c.run();
+    c.eat();
+    console.log(p);
+    console.log(c);
+
+  </script>
+</body>
+
+</html>

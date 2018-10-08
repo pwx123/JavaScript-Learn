@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>深拷贝</title>
+</head>
+
+<body>
+  <script>
+    var Person = {
+      name: 'pwx',
+      age: 35,
+      address: {
+        local: '北京'
+      },
+      school: ['小学', '中学', '大学']
+    }
+    var programmer = {
+      id: 1
+    }
+
+    function extendDeeply(f, c) { //递归调用
+      var c = c || {};
+      for (var prop in f) {
+        if (typeof f[prop] === 'object') {
+          c[prop] = (f[prop].constructor === Array) ? [] : {};
+          extendDeeply(f[prop], c[prop]);
+        } else {
+          c[prop] = f[prop];
+        }
+      }
+    }
+    extendDeeply(Person, programmer);
+    console.log(programmer);
+    programmer.school[2] = '高中';
+    console.log(programmer);
+    console.log(Person);
+
+    function Parent() {
+      this.value = 'zz';
+      this.skill = {
+        music: '123'
+      };
+    }
+
+    function Child() {
+      Parent.call(this); //call复制父类
+      this.language = 'chinese';
+    }
+    var c = new Child();
+    console.log(c);
+
+    //原型链
+    var p = {
+      values: 'pwx'
+    }
+
+    function myCreate(p) {
+      var ins;
+
+      function F() {}; //建立原型链 实现继承
+      F.prototype = p;
+      ins = new F();
+      return ins;
+    }
+    var newp = myCreate(p);
+    console.log(newp);
+
+    //原型链
+    function P(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    P.prototype.eat = function () {
+      console.log('eat');
+    }
+
+    function C(name, age, title) {
+      P.apply(this, arguments);
+      this.title = title;
+    }
+    // //1. 子类影响父类
+    // C.prototype = P.prototype;
+    // //2. 浪费空间
+    // C.prototype = new P();
+    // //3.原型链实现继承
+
+    function F() {
+
+    }
+    F.prototype = P.prototype;
+    var f = new F();
+    C.prototype = f;
+    //继承四部曲 父类 子类 继承 修正构造器
+    C.prototype.constructor = C; //修正构造器
+    C.super = C.base = P.prototype; //子类调用父类 super效果
+
+    C.prototype.work = "apple"; //对子类protottype的修改放在继承之类 应为 C.prototype会重置prototype
+    C.prototype.FEat = function(){
+      C.super.eat(); //调用父类
+    }
+    var p = new P('pwx', 25);
+    console.log(p);
+    var c = new C('zz', 30, 'hello');
+    console.log(c);
+    c.FEat();
+  </script>
+</body>
+
+</html>

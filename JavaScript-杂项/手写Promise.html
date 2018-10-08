@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <a href="https://juejin.im/post/5b596449f265da0f47352989">掘金链接</a>
+  <script>
+    // 两种传统解决方案
+    console.warn('回调函数Callback');
+    /* 1.回调函数Callback */
+    function sum() {
+      return eval([...arguments].join('+'));
+    }
+    // 三秒后执行函数
+    function asyncGetSum(callback) {
+      setTimeout(function () {
+        var result = callback(1, 2, 3, 4, 5);
+        console.log('三秒后执行函数');
+        console.log(result);
+      }, 3000)
+    }
+    asyncGetSum(sum);
+    console.warn('事件');
+    /* 2.事件 */
+    // 事件处理就是jQuery中的on绑定事件和trigger触发事件，其实就是我们常见的发布订阅模式，
+    // 当我订阅了一个事件，那么我是订阅者，如果发布者发布了数据之后，那么我就要收到相应的通知。
+
+    // 定义一个发布中心
+    let publishCenter = {
+      subscribeArrays: {}, //定义一个订阅者回调函数callback
+      subscribe: function (key, callback) {
+        //增加订阅者
+        if (!this.subscribeArrays[key]) {
+          this.subscribeArrays[key] = [];
+        }
+        this.subscribeArrays[key].push(callback);
+      },
+      publish: function () {
+        // 发布 第一个参数是key
+        let params = [...arguments];
+        // 删除第一个并返回第一个的值
+        let key = params.shift();
+        let callbacks = this.subscribeArrays[key];
+        if (!callbacks || callbacks.length === 0) {
+          // 如果没有人订阅 那么就返回
+          return false;
+        }
+        for (let i = 0; i < callbacks.length; i++) {
+          callbacks[i].apply(this, params);
+        }
+      }
+    }
+    // 订阅一个wantWatermelon事件
+    publishCenter.subscribe('wantWatermelon', function () {
+      console.log('吃西瓜了!');
+    })
+    // 触发wantWatermelon事件
+    publishCenter.publish('wantWatermelon');
+
+    // 订阅一个sum事件
+    publishCenter.subscribe('sum', function () {
+      let sum = 0;
+      for (let i = 0; i < arguments.length; i++) {
+        sum += arguments[i];
+      }
+      console.log(sum);
+    })
+    // 触发sum事件
+    publishCenter.publish('sum', 1, 2, 3);
+
+
+    console.warn('promise');
+    /* 
+    一个promise只有三种状态，pending态，fulfilled态(完成态),rejected(拒绝态)
+    当promise处于pending态时，可能转化成fulfilled或者rejected
+    一旦promise的状态改成了fulfilled后，状态就不能再改变了，并且需要提供一个不可变的value
+    一旦promise的状态改成了rejected后，状态就不能再改变了，并且需要提供一个不可变的reason
+     */
+
+    let promise1 = new Promise((resolve, reject) => { // 成功或失败需要提供一个value或reason
+      // 可以发现 当我们new Promise的时候这句话是同步执行的
+      // 也就是说当我们初始化一个Promise的时候，内部的回调函数（通常我们叫做执行器executor）会立即执行
+      console.log('hahaha');
+      // promise内部支持异步
+      setTimeout(function () {
+        resolve(123);
+      }, 100);
+      throw new Error('error'); //在执行器内部直接抛出一个错误，这时promise会直接变成rejected态
+    })
+    promise1
+      .then((val) => {
+        console.log(val);
+      }, (err) => {
+        console.log(err);
+      })
+      .catch((err) => {
+        console.log('catch');
+        console.log(err);
+      })
+    // 1.promise有三种状态 默认pending态 pending可以变成fulfilled（成功态）或者rejected（失败态），而一旦转变之后就不能在变成其他值了
+    // 2.promise内部有一个value 用来存储成功态的结果
+    // 3.promise内部有一个reason 用来存储失败态的原因
+    // 4.promise接受一个executor函数，这个函数有两个参数，一个是resolve方法，一个是reject方法，当执行resolve时，promise状态改变为fulfilled，执行reject时，promise状态改变为rejected
+    // 5.默认 new Promise 执行的时候内部的executor函数执行
+    // 6.promise内部支持异步改变状态
+    // 7.promise内部支持抛出异常，那么该promise的状态直接改成rejected
+
+  </script>
+  <script src="./js/promise.js"></script>
+</body>
+
+</html>

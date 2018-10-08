@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>this 指向详细解析</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  console.group("函数上下文调用")
+  console.warn("函数直接调用");
+
+  function f1() {
+    return this; //window
+  }
+  console.log(f1());
+
+  function f2() {
+    'use strict';
+    return this; //undefined 严格模式下为undefined
+  }
+  console.log(f2());
+
+  console.warn("对象中的this");
+  // 对象内部方法的this指向调用这些方法的对象
+  // 1.函数的定义位置不影响this指向,this指向只和调用函数的对象有关
+  // 2.多层嵌套的对象,内部方法的this指向离被调用函数最近的对象
+  //1
+  prop = 'window'
+  var obj = {
+    prop: 'obj',
+    fn: function () {
+      console.log(this.prop);
+    }
+  }
+  obj.fn(); // obj
+  var a = obj.fn;
+  a(); // window
+  //2
+  var obj1 = {
+    prop: 'obj1'
+  }
+
+  function fn1() {
+    console.log(this.prop);
+  }
+  obj1.f = fn1;
+  obj1.f(); //obj1
+  //3
+  var obj3 = {
+    fn2: fn1,
+    prop: 'obj3'
+  }
+  obj3.fn2(); //obj3
+
+  console.warn("原型链中的this");
+  // 原型链中的方法仍然指向调用它的对象
+  var obj4 = {
+    a: 2,
+    b: 4,
+    fn4: function () {
+      return this.a + this.b;
+    }
+  }
+  var p = Object.create(obj4);
+  p.a = 1;
+  p.b = 2;
+  console.log(p);
+  console.log(p.__proto__)
+  console.log(p.fn4()) //3
+
+  console.warn("构造函数中的this");
+  // 构造函数中的this与创建的新对象绑定
+  // new 改变函数指向
+  // 注意: 当构造器返回的默认是一个this引用的对象时,可以手动设置返回其他的对象,如果返回值不是一个对象,返回this。
+  a = 10;
+
+  function C() {
+    this.a = 37;
+    this.fn = setTimeout(function () {
+      console.log('C()') // 直接调用 new
+      console.log(this); //window window
+    });
+    this.fn1 = setTimeout(() => {
+      console.log('C()') //window C
+      console.log(this);
+    });
+    console.log(this);
+  }
+  // 直接调用构造函数
+  //C(); //指向window
+  console.log(window.a); //37
+  var c = new C(); //C
+  console.log('console C')
+  console.log(c);
+
+  function C2() {
+    this.a = 37;
+    return {
+      a: 38
+    };
+  }
+
+  var b = new C2();
+  console.log(b.a); //38
+  console.warn("setTimeout&setInterval");
+  //对于延时函数内部的回调函数的this指向全局对象window（当然我们可以通过bind方法改变其内部函数的this指向）
+  var age = 1;
+
+  function Person() {
+    this.age = 0;
+    setTimeout(function () {
+      console.log("Person()")
+      console.log(this); //window
+    }, 3000);
+  }
+  var p = new Person(); 
+  function Person1() {
+    this.age1 = 0;
+    var _this = this;
+    setTimeout((function () {
+      console.log("Person1()")
+      console.log(this); //Person1
+      console.log(_this); //Person1
+    }).bind(this),0);
+  }
+  var p1 = new Person1(); 
+  console.groupEnd()
+
+</script>
+
+</html>

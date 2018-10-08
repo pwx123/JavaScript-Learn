@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>水印生成-图片</title>
+</head>
+
+<body>
+  <img src="./原型链.jpg" alt="">
+  <script>
+    (function () {
+      // canvas实现 watermatk水印
+      function _picWM({
+        url = '',
+        textAlign = 'center',
+        textBaseLine = 'middle',
+        font = '20px Microsoft Yaheis',
+        fillStyle = 'rgba(184,184,184,0.8)',
+        content = '请勿外传',
+        cb = null,
+        textX = 100,
+        textY = 30,
+        rotate = '30',
+        zIndex = 1000
+      } = {}) {
+        const img = new Image();
+        img.src = url;
+        img.crossOrigin = 'anonymous';
+        img.onload = function () {
+          const canvas = document.createElement('canvas');
+          canvas.setAttribute('width', img.width);
+          canvas.setAttribute('height', img.height);
+          const ctx = canvas.getContext('2d');
+
+          ctx.drawImage(img, 0, 0);
+          ctx.textAlign = textAlign;
+          ctx.textBaseline = textBaseLine;
+          ctx.font = font;
+          ctx.fillStyle = fillStyle;
+          ctx.fillText(content, img.width - textX, img.height - textY);
+          ctx.fillText(content, img.width - textX - 20, img.height - textY - 30);
+
+          const base64Url = canvas.toDataURL();
+          cb && cb(base64Url);
+        }
+      }
+      window._picWM = _picWM;
+    })();
+    _picWM({
+      url: 'http://127.0.0.1:8080/原型链.jpg',
+      content: 'QQMusicFE',
+      cb: (base64Url) => {
+        document.querySelector('img').src = base64Url
+      },
+    });
+
+  </script>
+</body>
+
+</html>

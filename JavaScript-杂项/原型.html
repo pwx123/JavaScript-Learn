@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Person() {
+      this.age = 10;
+    }
+    Person.prototype.headCount = 1;
+    var p = new Person();
+    console.log(p);
+    console.log("p.headCount" + p.headCount);
+    console.log(p.constructor.prototype); //p的构造器的prototype
+    console.log(Person.prototype); //Person的prototype
+    console.log(p.__proto__); //p的__proto__ 指向构造器的prototype ==== Person.prtottype
+    console.log(p.constructor.prototype === Person.prototype);
+    console.log(p.constructor.prototype === p.__proto__);
+    console.log("\n");
+    console.log(p.__proto__.__proto__.constructor);
+    console.log(Person.constructor);
+
+    function Dog(dname) {
+      var age = 10;
+
+      function pm() { //this指向window
+        console.log(this);
+        console.log(this.dogname)
+      }
+      this.dogname = dname;
+      this.print = function () {
+        console.log(this.dogname);
+        console.log(this);
+        pm(); //undefined
+        pm.call(this); //将pm指向Dog
+      }
+    }
+    var d = new Dog('tom');
+    d.print(); //this指向d 即Dog
+
+  </script>
+</body>
+
+</html>

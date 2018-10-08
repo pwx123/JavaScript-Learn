@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>对象</title>
+</head>
+
+<body>
+  <script>
+    var o = {
+      name: 'pwx',
+      age: 18
+    }
+    Object.defineProperty(o, 'address', {
+      value: '北京',
+      writable: true, //可写
+      enumerable: true, //可枚举
+      configurable: true //可配置 删除 更改 writable等等
+    })
+    Object.defineProperties(o, {
+      height: {
+        get: function () {
+          return 300;
+        },
+        set: function (val) {
+          console.log(val);
+        }
+      }
+    })
+    console.log(o);
+    o.address = '上海';
+    console.log(o);
+    console.log("是否拥有height属性:" + o.hasOwnProperty('height'));
+    console.log(Object.getOwnPropertyNames(o));
+    delete o.name;
+    console.log(o);
+    console.log(Object.getOwnPropertyDescriptor(o, 'address'));
+
+    function ArraySimilar(arr1, arr2) {
+      if (!Array.isArray(arr1) || !Array.isArray(arr2) || arr1.length != arr2.length) {
+        return false;
+      }
+      arr3 = [];
+      arr4 = [];
+      for (var i = 0; i < arr1.length; i++) {
+        arr3.push(typeof arr1[i]);
+        arr4.push(typeof arr2[i]);
+      }
+      if (arr3.sort().toString() === arr4.sort().toString()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    arr1 = [false, 'px', 2];
+    arr2 = ['1', 1, true];
+    console.log(ArraySimilar(arr1, arr2));
+
+    function Person() {
+      this.age = 10;
+      this.name = 'pwx'
+    }
+    Person.prototype.headCount = 1;
+    var p = new Person();
+    console.log(p);
+    console.log(p.headCount);
+    console.log(p.constructor); //构造器
+    console.log("实例:" + (p instanceof Person)); //实例
+    Person.prototype.xx = '23';
+    console.log("xx:" + p.xx);
+    Person.prototype = {
+      xxx: 'pwxxx'
+    }
+    console.log("xxx:" + p.xxx);
+    p1 = new Person();
+    console.log("xxx:" + p1.xxx);
+
+    function Dog() {
+      this.name = 'tom'
+    }
+    var g = new Dog();
+    console.log(g);
+
+    //this
+    this.name = "global";
+    var o = {
+      name: 'pwx',
+      print: function () {
+        console.log(this.name);
+      }
+    }
+    o.print(); //内部name
+    var p = o.print;
+    p(); //全局name
+    function log(a) {
+      console.log(this[a]);
+    }
+    log('name'); //全局
+    log.call(o, 'name'); //改变this指向
+
+    function k() {
+      this.age = 12;
+    }
+    j = {};
+    k.call(j);
+    console.log(j); //拷贝对象
+
+  </script>
+</body>
+
+</html>

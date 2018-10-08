@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>作用域</title>
+</head>
+
+<body>
+  <div id="1">1clickme</div>
+  <div id="2">2clickme</div>
+  <div id="3">3clickme</div>
+  <div id="4">4clickme</div>
+  <div id="5">5clickme</div>
+  <div id="6">6clickme</div>
+  <script>
+    // function f(){
+    //   console.log(z);
+    // }
+    // function a(){
+    //   var z=10;
+    //   f();
+    // }
+    // a(); 会报错
+    for (var i = 1; i <= 3; i++) {
+      var btn = document.getElementById(i);
+      btn.onclick = function () {
+        alert(i);
+      }
+    }
+    for (var i = 4; i <= 6; i++) {
+      var btn = document.getElementById(i);
+      btn.onclick = (function (i) {
+        return function () {
+          alert(i);
+        }
+      })(i); //闭包
+    }
+
+    function b() {
+      var x = 100;
+
+      function d() { //链式结构 声明时指向父级元素
+        console.log(x);
+      }
+      d(); //调用时创建自己的词法结构
+    }
+    b();
+
+    function e() {
+      var a = 0;
+      return function () {
+        a++;
+        console.log(a);
+      }
+    }
+    var add = e();
+    add();
+
+    function f() {
+      var b = 1;
+
+      function g() {
+        b++;
+        return b;
+      }
+      return g;
+    }
+    var add1 = f();
+    console.log(add1());
+    console.log(add1());
+    console.log(add1());
+
+    function calFactory(base) {
+      return function (length) {
+        var sum = 0;
+        for (var i = 0; i < length; i++) {
+          sum += (i + 1);
+        }
+        return sum += base;
+      }
+    }
+    var addLength = calFactory(2);
+    console.log(addLength(3));
+
+  </script>
+</body>
+
+</html>
