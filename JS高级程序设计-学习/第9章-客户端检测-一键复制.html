@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>第9章-客户端检测</title>
+</head>
+
+<body>
+  <p id="p">Hello World!</p>
+  <p name="test" class="test" id="test">test</p>
+  <textarea name="textarea" id="textarea" cols="30" rows="10">ewrwer</textarea>
+  <div id="copyme">复制复制</div>
+  <button id="btn">复制</button>
+</body>
+<script>
+  console.log(navigator.userAgent);
+  console.log(document.nodeType);
+  var p = document.getElementById("p")
+  console.log(p.nodeType);
+  console.log(p.nodeName);
+  console.log(p.nodeValue);
+  console.log(document.childNodes);
+  console.log(document.URL);
+  console.log(decodeURIComponent(document.URL));
+  console.log(document.domain);
+  console.log(document.referrer);
+  var p1 = document.getElementById("test");
+  console.log(p1);
+  console.log(p1.id);
+  console.log(p1.className);
+  //document.write("<strong>" + new Date() + "</strong>");
+  console.log(p1.getAttribute('class')); //
+  console.log(p1.setAttribute('class', 'test2'));
+  var textarea = document.getElementById("textarea");
+  var btn = document.getElementById('btn');
+  textarea.onfocus = function (event) {
+    console.log(this);
+    //this.select();
+    this.setSelectionRange(1, 4);
+    console.log(this.selectionStart);
+    console.log(this.selectionEnd);
+  }
+  textarea.oncopy = function (event) { //Firefox、Safari 和Chrome 只允许在onpaste 事件处理程序中访问getData()方法。
+    console.log(event);
+    var copyvalue = event.target.value.substring(event.target.selectionStart, event.target.selectionEnd);
+    var value = copyvalue + "复制的内容";
+    event.clipboardData.setData("text", value);
+    event.preventDefault();
+  }
+  btn.onclick = function (event) {
+    console.log(event);
+    var val = document.getElementById('copyme');
+    window.getSelection().selectAllChildren(val);
+    document.execCommand("copy");
+  }
+  var book = {
+    title: "Professional JavaScript",
+    authors: [
+      "Nicholas C. Zakas"
+    ],
+    edition: 3,
+    year: 2011
+  };
+  var jsonText = JSON.stringify(book); //对象转换为JSON
+  console.log(jsonText);
+  console.log(JSON.parse(jsonText)); //JSON转换为对象
+
+</script>
+
+</html>

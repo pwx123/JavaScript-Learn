@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BOM</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  console.warn("窗口位置");
+  console.log(window.screenLeft);
+  console.log(window.screenX);
+  console.log(window.innerHeight);
+  console.log(window.outerHeight);
+  console.log("超时调用与间歇调用");
+  // var timer = setTimeout(function () {
+  //   console.log("hello");
+  // }, 500);
+  // var result = confirm("确定吗?");
+  // console.log(result);
+  // var result = prompt("输入名字");
+  // console.log(result);
+  // window.print();打印机
+  console.log(location);
+  console.log(decodeURIComponent(location.pathname));
+  //location.href = "http://www.baidu.com"
+  console.log(navigator.appCodeName);
+  console.log(navigator.appName);
+  console.log(navigator.plugins);
+  console.log(navigator.vendor);
+  console.log(navigator.onLine);
+
+</script>
+
+</html>

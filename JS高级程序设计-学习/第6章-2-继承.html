@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>第6章-继承</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  function SuperType() { //父类
+    this.value = 12;
+    this.colors = [1, 2, 3]
+  }
+  SuperType.prototype.getSuperValue = function () {
+    console.log(this.value);
+  }
+
+  function BaseType() { //子类
+    this.value = 11;
+    this.baseValue = 10;
+  }
+  BaseType.prototype = new SuperType(); //子类原型等于父类的实例，继承了父类实例与原型的所有属性和方法
+  BaseType.prototype.getBaseValue = function () { //添加了自己的方法
+    console.log(this.value);
+    console.log(this.baseValue);
+  }
+  var base1 = new BaseType();
+  console.log(base1);
+  console.log(base1.constructor); //构造器是SuperType prototype改变了指向,指向SuperType实例,而SuperType实例的__proto__的constructor为SuperType
+  console.log(base1.__proto__.__proto__.constructor);
+  console.log(base1.__proto__); //SuperType的实例
+  console.log(base1.__proto__.__proto__); //SuperType的原型
+  console.log(base1.__proto__.__proto__.__proto__); //Object
+  console.warn("方法测试");
+  base1.getSuperValue(); //输出11 因为在实例向上搜索
+  base1.getBaseValue();
+  console.warn("原型与实例的关系");
+  console.log(base1 instanceof BaseType);
+  console.log(base1 instanceof SuperType);
+  console.log(base1 instanceof Object);
+  console.warn("原型链的问题");
+  // BaseType的prototype是SuperType的实例，所以如果实例中的属性有引用属性,比如数组
+  // 修改一个BaseType实例数组,就会造成全部实例的数组都改变
+  var base2 = new BaseType();
+  base1.colors.pop();
+  console.log(base2.colors); //改变base1 base2也改变 数组少了一个数
+
+
+  console.warn("借用构造函数（伪造对象或经典继承）");
+  //利用call或apply
+  function SuperType1(age) {
+    this.colors = [1, 2, 3];
+    this.age = age;
+  }
+
+  function BaseType1(name, age) {
+    SuperType1.call(this, age); //执行了构造函数 可以传递参数
+    this.name = name;
+  }
+  var base3 = new BaseType1("pwx", 13); //给定参数
+  console.log(base3);
+
+
+  console.warn("组合继承（伪经典继承）");
+
+  function SuperType2(name, age) {
+    this.name = name;
+    this.age = age;
+    this.colors = [1, 2, 3, 4];
+  }
+  SuperType2.prototype.sayName = function () {
+    console.log(this.name);
+  }
+
+  function BaseType2(name, age, address) {
+    SuperType2.call(this, name, age); //原型是SuperType2的实例，包含所有实例属性，这个操作会造成元素重复
+    this.address = address;
+  }
+
+  BaseType2.prototype = new SuperType2(); //BaseType2的原型等于SuperType的实例 所以说会有重复的值
+  //BaseType2.prototype.constructor = BaseType2;
+  Object.defineProperty(BaseType2.prototype, "constructor", { //不可枚举的
+    enumerable: false,
+    value: BaseType2
+  })
+  BaseType2.prototype.sayAddress = function () {
+    console.log(this.address);
+  }
+  var super1 = new SuperType2("zw", 12);
+  var base4 = new BaseType2("zz", 23, "北京");
+  var base5 = new BaseType2("ww", 31, "上海");
+  console.log(super1);
+  base4.colors.pop();
+  console.log(base4);
+  console.log(base5);
+  console.log(base4.colors); //和原型里的重复了
+  console.log(base4.__proto__.colors);
+
+
+  console.warn("原型式继承");
+
+  function object(o) { //实现继承 存在引用类型共享的问题
+    function F() {}
+    F.prototype = o;
+    return new F(); //返回一个对象原型为o的对象
+  }
+  var person = {
+    name: 'zz',
+    friends: [1, 2, 3]
+  }
+  var p1 = object(person);
+  p1.name = "2z";
+  p1.friends.pop();
+  var p2 = object(person);
+  console.log(p1);
+  console.log(p2);
+
+  var p3 = Object.create(person, { //ES6函数 复制时指定值
+    name: {
+      enumerable: false,
+      value: "1"
+    }
+  });
+  console.log(p3);
+  console.warn("引用类型还是会共享");
+
+
+  console.warn("寄生式组合继承"); //最理想的继承
+  // 不必为了指定子类型的原型而调用超类型的构造函数，我们所需要的无非就是超类型
+  // 原型的一个副本而已。本质上，就是使用寄生式继承来继承超类型的原型，然后再将结果指定给子类型
+  // 的原型。
+  function ingeritPrototype(BaseType, SuperType) {
+    var prototype = object(SuperType.prototype);
+    prototype.constructor = BaseType;
+    BaseType.prototype = prototype;
+  }
+
+  function SuperType3(name) {
+    this.name = name;
+    this.colors = [1, 2, 3, 4];
+  }
+  SuperType3.prototype.sayName = function () {
+    console.log(this.name);
+  }
+
+  function BaseType3(name, age) {
+    SuperType3.call(this, name);
+    this.age = age;
+  }
+  ingeritPrototype(BaseType3, SuperType3);
+  BaseType3.prototype.sayName = function () {
+    console.log(this.name);
+  }
+  var super2 = new SuperType3("qq");
+  var base6 = new BaseType3("zz", 12);
+  var base7 = new BaseType3("ww", 34);
+  console.log(super2);
+  console.log(base6);
+  console.log(base7);
+
+  console.warn("自己练习");
+
+  function myCreate(Child, Parent) {
+    function F() {}
+    F.prototype = Parent.prototype;
+    Child.prototype = new F();
+    Object.defineProperty(Child.prototype, "constructor", {
+      enumerable: false,
+      value: Child
+    });
+    Object.defineProperty(Child.prototype, "super", {
+      enumerable: false,
+      value: Parent.prototype
+    })
+  }
+
+  function Parent(name) {
+    this.name = name;
+    this.colors = [1, 2, 3];
+  }
+  Parent.prototype.sayName = function () {
+    console.log(this);
+    console.log("Parent中的方法," + this.name);
+  }
+
+  function Child(name, age) {
+    Parent.call(this, name);
+    this.age = age;
+  }
+  myCreate(Child, Parent); //要在下一句前面，因为会重写，重写后再赋值，不能就被替换了
+  Child.prototype.sayName = function () {
+    console.log("Child中的方法," + this.name);
+  }
+  var child1 = new Child("pwx", 12);
+  var child2 = new Child("zz", 13);
+  child1.name = "new";
+  child1.colors.pop();
+  console.log(child1);
+  console.log(child2);
+  child1.sayName();
+  child1.super.sayName(); //undefined 调用父类的方法。只是继承了父类的prototype,并没有实例属性name
+  child1.super.sayName.call(child1); //改变this指向 输出了name
+
+</script>
+
+</html>

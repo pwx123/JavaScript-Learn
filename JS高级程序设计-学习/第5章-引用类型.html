@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>arguments</title>
+</head>
+
+<body>
+  <script>
+    function a(a, b) {
+      console.log(arguments);
+      return a + b;
+    }
+    console.log(a(1, 2));
+
+    function jiecheng(n) {
+      if (n <= 1) {
+        return 1;
+      } else {
+        return n * jiecheng(n - 1); //需要消除这种紧密耦合
+      }
+    }
+    console.log(jiecheng(3));
+
+    function jiechengNew(n) {
+      if (n <= 1) {
+        return 1;
+      } else {
+        return n * arguments.callee(n - 1); //callee是一个指针，指向拥有这个arguments对象的函数
+      }
+    }
+    console.log(jiechengNew(3));
+    //this问题
+    window.color = "red";
+    var o = {
+      color: "blue"
+    };
+
+    function sayColor() {
+      console.log(this);
+      console.log(this.color);
+    }
+    sayColor();
+    o.sayColor = sayColor;
+    o.sayColor();
+
+    var name = "ww";
+
+    function outer() {
+      var name = "pwx";
+      console.warn("outer");
+      console.log(this);
+      console.log(this.name);
+      console.log(outer.caller); //windows为null
+      inner();
+    }
+
+    function inner() {
+      var name = "zj";
+      console.warn("inner");
+      console.log(this);
+      console.log(this.name);
+      console.log(inner.caller); //调用当前函数的函数引用(谁调用了当前函数)
+      console.log(arguments.callee.caller == inner.caller);
+    }
+    outer();
+    console.warn("call和apply");
+
+    function sum(a, b) {
+      return a + b;
+    }
+
+    function testApply() {
+      console.log(this)
+      return sum.apply(this, arguments);
+    }
+    console.log(testApply(1, 2));
+
+    var value = 99;
+
+    function applyThis(a, b) {
+      console.log(this.value);
+      console.log(a, b);
+    }
+    var obj = {
+      value: 88
+    }
+    applyThis();
+    applyThis.apply(obj, [1, 2]); //改变this指向
+    applyThis.call(obj, 1, 2);
+    console.warn("bind");
+    var applyThisBind = applyThis.bind(obj, 1, 2); //创建绑定obj的函数实例(返回一个绑定好作用域的函数)
+    var applyThisBind2 = applyThis.bind(obj);
+    console.log(applyThisBind);
+    applyThisBind();
+    applyThisBind2(1, 2);
+
+    console.warn("Number");
+    var num = 10.009;
+    console.log(num.toString(2));
+    console.log(num.toFixed(2)); //会舍入
+    console.log(num.toExponential(2)); //科学记数法
+
+    console.warn("String");
+    var str = "cat,bat,sat";
+    var pattern = /at/;
+    var matches = str.match(pattern);
+    console.log(matches);
+    var index = str.search(pattern);
+    console.log(index);
+    console.warn("encodeURI")
+    var URI = "http://www.baidu.com/test 2#start";
+    var a = encodeURI(URI); //不编码前面
+    console.log(a);
+    console.log(decodeURI(a));
+    var b = encodeURIComponent(URI);
+    console.log(b);
+    console.log(decodeURIComponent(b));
+
+  </script>
+</body>
+
+</html>
