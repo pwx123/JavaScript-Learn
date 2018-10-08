@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="..\js\jquery-3.2.1.js"></script>
+    <title>事件</title>
+</head>
+<style>
+    .content {
+        display: none;
+    }
+
+    .box {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        background-color: #bdd7ee;
+    }
+    .hover{
+        position: relative;
+        width: 50px;
+        height: 50px;
+        background-color: #d6d445;
+    }
+</style>
+
+<body>
+    <div id="panel">
+        <button class="button1">button1</button>
+        <button class="button2">button2</button>
+        <button class="button3">button3</button>
+        <div class="content">1.jQuery是。。。。。。。。。</div>
+        <div class="content">2.jQuery是。。。。。。。。</div>
+        <div class="content">3.jQuery是。。。。。。。。</div>
+    </div>
+    <div>
+        <button class="button4">动画</button>
+        <div class="box" id="box"></div>
+    </div>
+    <div class="hover" id="hover"></div>
+</body>
+<script src="4-动画.js"></script>
+
+</html>

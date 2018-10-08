@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./js/jquery-3.2.1.js"></script>
+  <title>insertTable</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      background-color: #ddd;
+    }
+
+    .content {
+      width: 900px;
+      margin: 0 auto;
+      padding-top: 70px;
+    }
+
+    .content ul {
+      display: flex;
+      width: 100%;
+      flex-wrap: nowrap;
+    }
+
+    .content ul li {
+      display: flex;
+      list-style: none;
+      background-color: #fff;
+      margin: 1px;
+      height: 50px;
+      width: 100%;
+      border-radius: 4px;
+      line-height: 50px;
+      text-align: center;
+      font-size: 20px;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .content ul li:hover {
+      background-color: #eef;
+    }
+
+    .content ul li input {
+      display: flex;
+      font-size: 20px;
+      height: 80%;
+      width: 90%;
+    }
+
+    .content ul li input:focus {
+      outline: none;
+    }
+
+    .content ul li span {
+      display: inline-block;
+      padding: 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content" id="content">
+    <ul id="content_ul">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li class="add" id="add">添加</li>
+    </ul>
+  </div>
+</body>
+<script>
+  var $content = $("#content");
+  var $content_ul = $("#content_ul");
+
+  $(function () {
+    $add_li = $("#add");
+    $add_li.click(add);
+  })
+
+  function add() {
+    var $ul = $("<ul></ul>");
+    for (var i = 0; i < $content_ul.children().length - 1; i++) {
+      var $li = $("<li><input type='text'/></li>");
+      $ul.append($li);
+    }
+    var $li_button = $("<li></li>");
+    var $save = $("<span>保存</span>");
+    $save.click(save);
+    var $cancel = $("<span>取消</span>");
+    $cancel.click(cencel);
+    $li_button.append($save);
+    $li_button.append($cancel);
+    $ul.append($li_button);
+    $content.append($ul);
+  }
+
+  function save() {
+    var val = [];
+    $ul_save = $(this).parent().parent();
+    $li_save = $ul_save.children();
+    $li_save.each(function () {
+      val.push($(this).find(":input").val());
+    });
+    val.pop(val.length);
+    var $ul_new = $("<ul></ul>");
+    for (var i = 0; i < $content_ul.children().length - 1; i++) {
+      var $li_new = $("<li>" + val[i] + "</li>");
+      $ul_new.append($li_new);
+    }
+    var $li_button = $("<li></li>");
+    var $edit = $("<span>编辑</span>");
+    $edit.click(edit);
+    var $remove = $("<span>删除</span>");
+    $remove.click(cencel);
+    $li_button.append($edit);
+    $li_button.append($remove);
+    $ul_new.append($li_button);
+    $ul_save.replaceWith($ul_new);
+  }
+
+  function edit() {
+    var val = [];
+    var $ul_save = $(this).parent().parent();
+    $li_save = $ul_save.children();
+    $li_save.each(function () {
+      val.push($(this).text());
+    });
+    val.pop(val.length);
+    var $ul = $("<ul></ul>");
+    for (var i = 0; i < $content_ul.children().length - 1; i++) {
+      var $li = $("<li><input type='text' value='" + val[i] + "'/></li>");
+      $ul.append($li);
+    }
+    var $li_button = $("<li></li>");
+    var $save = $("<span>保存</span>");
+    $save.click(save);
+    var $cencel = $("<span>取消</span>");
+    $cencel.click(function () {
+      $li_last = $ul_save.children(":last");
+      $li_last.find("span:eq(0)").click(edit);
+      $li_last.find("span:eq(1)").click(cencel);
+      $(this).parent().parent().replaceWith($ul_save);
+    });
+    $li_button.append($save);
+    $li_button.append($cencel);
+    $ul.append($li_button);
+    $ul_save.replaceWith($ul);
+  }
+
+  function cencel() {
+    $(this).parent().parent().remove();
+  }
+</script>
+
+</html>

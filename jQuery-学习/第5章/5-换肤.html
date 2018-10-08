@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="..\js\jquery-3.2.1.js"></script>
+    <script src="..\js\cookies.js"></script>
+    <link rel="stylesheet" href="skin0.css" id="cssfile">
+    <title>5-换肤</title>
+</head>
+
+<body>
+    <div>
+        <div class="tab">
+            <ul>
+                <li class="selected" title="黄色" id="skin0"></li>
+                <li title="红色" id="skin1"></li>
+            </ul>
+        </div>
+        <div class="content_box">
+            <div class="content">
+                时事要闻
+            </div>
+            <div class="content">
+                娱乐新闻
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        var cookie_skin = Cookies.get("MyCssSkin");
+        if (cookie_skin) {
+            switchSkin(cookie_skin);
+        }
+        $(".tab ul li").click(function () {
+            switchSkin(this.id);
+        })
+    })
+
+    function switchSkin(skinName) {
+        $("#" + skinName)
+            .addClass("selected")
+            .siblings().removeClass("selected");
+        $("#cssfile").attr("href", skinName + ".css");
+        Cookies.set("MyCssSkin", skinName, { //用cookies存在本地
+            path: '/',
+            expires: 10
+        })
+    }
+</script>
+
+</html>

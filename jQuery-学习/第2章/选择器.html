@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="..\js\jquery-3.2.1.js"></script>
+  <title>选择器</title>
+</head>
+
+<body>
+  <div class="one" id="one">
+    id为one,class为one的div
+    <div class="mini">class为mini</div>
+  </div>
+  <div class="one" id="two" title="test">
+    id为two,class为one,title为test的div
+    <div class="mini" title="other">class为mini,title为other</div>
+    <div class="mini" title="test">class为mini,title为test</div>
+  </div>
+  <div class="one">
+    <div class="mini">class为mini</div>
+    <div class="mini">class为mini</div>
+    <div class="mini">class为mini</div>
+    <div class="mini"></div>
+  </div>
+  <div class="one">
+    <div class="mini">class为mini</div>
+    <div class="mini">class为mini</div>
+    <div class="mini">class为mini</div>
+    <div class="mini" title="tesst">class为mini,title为tesst</div>
+  </div>
+  <div style="display:none" class="none">style为display为"none"的div</div>
+  <div class="hide">class为"hide"的div</div>
+  <div>包含input的type为"hidden"的div
+    <input type="hidden" size="8"> </div>
+  <span id="mover">正在执行动画的span元素</span>
+  <ul>
+    <li>
+      <input type="checkbox" id="id-one-color">
+      <label for="id-one-color">id为one的颜色设为#bbffaa</label>
+    </li>
+    <li>
+      <input type="checkbox" id="class-mini-color">
+      <label for="class-mini-color">class为mini的颜色设为#bbeecc</label>
+    </li>
+    <li>
+      <input type="checkbox" id="div-color">
+      <label for="div-color">div的颜色设为#bbeecc</label>
+    </li>
+    <li>
+      <input type="checkbox" id="span-id-two-color">
+      <label for="span-id-two-color">span和id为two的颜色设为#bbeecc</label>
+    </li>
+    <li>
+      <input type="checkbox" id="body-div-color">
+      <label for="body-div-color">body内所有div的颜色设为#aabbbb</label>
+    </li>
+    <li>
+      <input type="checkbox" id="body-div-child-color">
+      <label for="body-div-child-color">body内子元素div的颜色设为#aaaabb</label>
+    </li>
+    <li>
+      <input type="checkbox" id="id-two-div-color">
+      <label for="id-two-div-color">id为two的以下第一个div的颜色(同级元素)设为#aaaabb</label>
+    </li>
+    <li>
+      <input type="checkbox" id="class-one-div-color">
+      <label for="class-one-div-color">class为one的以下所有div的颜色(同级元素)设为#bbddee (注意:siblings 所有的同辈元素 不分前后)</label>
+    </li>
+    <li>
+      <input type="checkbox" id="div-first-color">
+      <label for="div-first-color">选取所有div中第一个div</label>
+    </li>
+    <li>
+      <input type="checkbox" id="not-one-color">
+      <label for="not-one-color">class不为one的div</label>
+    </li>
+  </ul>
+</body>
+<script>
+  $(function () {
+    //基本选择器
+    $("#id-one-color").click(function () { //id为one
+      if ($(this).is(":checked")) {
+        $('#one').css("background", "#bbffaa");
+      } else {
+        $('#one').css("background", "#aaa");
+      }
+    })
+    $("#class-mini-color").click(function () { //class为mini
+      if ($(this).is(":checked")) {
+        $(".mini").css("background", "#bbeecc");
+      } else {
+        $(".mini").css("background", "#aaa");
+      }
+    })
+    $("#div-color").click(function () { //所有div
+      if ($(this).is(":checked")) {
+        $("div").css("background", "#aacccc");
+      } else {
+        $("div").css("background", "#aaa");
+      }
+    })
+    $("#span-id-two-color").click(function () { //span和id为two的
+      if ($(this).is(":checked")) {
+        $("span,#two").css("background", "#aacccc");
+      } else {
+        $("span,#two").css("background", "#aaa");
+      }
+    })
+    //层次选择器
+    $("#body-div-color").click(function () { //body内所有div
+      if ($(this).is(":checked")) {
+        $("body div").css("background", "#aabbbb");
+      } else {
+        $("body div").css("background", "#aaa");
+      }
+    })
+    $("#body-div-child-color").click(function () { //body内子元素div
+      if ($(this).is(":checked")) {
+        $("body > div").css("background", "#aaaabb");
+      } else {
+        $("body > div").css("background", "#aaa");
+      }
+    })
+    $("#id-two-div-color").click(function () { //紧跟着id为two的第一个div的颜色(同级元素)
+      if ($(this).is(":checked")) {
+        $("#two + div").css("background", "#aaddbb");
+      } else {
+        $("#two").next("div").css("background", "#aaa"); //不常用 用next代替
+        //$("#two + div").css("background", "#aaa");
+      }
+    })
+    $("#class-one-div-color").click(function () { //class为one的以下所有div的颜色(同级元素)
+      if ($(this).is(":checked")) {
+        $(".one ~ div").css("background", "#bbddee");
+      } else {
+        $(".one").nextAll("div").css("background", "#aaa"); //不常用 用nextAll代替
+        //$(".one ~ div").css("background", "#aaa"); //siblings 所有的同辈元素 不分前后
+      }
+    })
+    //过滤选择器
+    $("#div-first-color").click(function () {
+      if ($(this).is(":checked")) {
+        $("div:first").css("background", "#bbddee");
+      } else {
+        $("div:first").css("background", "#aaa");
+      }
+    })
+    $("#not-one-color").click(function () {
+      if ($(this).is(":checked")) {
+        $("div:not(.one)").css("background", "#bbddee");
+      } else {
+        $("div:not(.one)").css("background", "#aaa");
+      }
+    })
+  })
+</script>
+<style>
+  div,
+  span,
+  p {
+    width: 140px;
+    height: 140px;
+    margin: 5px;
+    background: #aaa;
+    border: #000 1px solid;
+    float: left;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  div.mini {
+    width: 55px;
+    height: 55px;
+    background-color: #aaa;
+    font-size: 12px;
+  }
+
+  div.hide {
+    display: none;
+  }
+
+  li {
+    list-style: none;
+  }
+</style>
+
+</html>

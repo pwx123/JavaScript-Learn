@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>5-表格应用</title>
+  <script src="..\js\jquery-3.2.1.js"></script>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .even {
+    background: #fff38f;
+  }
+
+  .odd {
+    background: #999;
+  }
+
+  .selected {
+    background-color: #666;
+  }
+
+  table {
+    text-align: center;
+  }
+
+  ul {
+    width: 200px;
+  }
+
+  li {
+    display: inline-block;
+    list-style: none;
+  }
+
+  .tab_box {
+    border: 1px solid #666;
+    width: 200px;
+    height: 100px;
+  }
+
+  .hide {
+    display: none;
+
+  }
+
+</style>
+
+<body>
+  <table cellpadding="3" cellspacing="0" id="table1">
+    <thead>
+      <tr>
+        <th></th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>暂住地</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input type="radio" name="td1">
+        </td>
+        <td>张三</td>
+        <td>男</td>
+        <td>北京</td>
+      </tr>
+      <tr>
+        <td>
+          <input type="radio" name="td1">
+        </td>
+        <td>里斯</td>
+        <td>女</td>
+        <td>田径</td>
+      </tr>
+      <tr>
+        <td>
+          <input type="radio" name="td1">
+        </td>
+        <td>王五</td>
+        <td>男</td>
+        <td>山海</td>
+      </tr>
+      <tr>
+        <td>
+          <input type="radio" name="td1">
+        </td>
+        <td>找刘</td>
+        <td>女</td>
+        <td>山东</td>
+      </tr>
+      <tr>
+        <td>
+          <input type="radio" name="td1">
+        </td>
+        <td>七八</td>
+        <td>男</td>
+        <td>乌鲁木齐</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table cellpadding="3" cellspacing="0">
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>暂住地</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="parent" id="row_01">
+        <td colspan="3">前台设计组</td>
+      </tr>
+      <tr class="child_row_01">
+        <td>张三</td>
+        <td>男</td>
+        <td>北京</td>
+      </tr>
+      <tr class="child_row_01">
+        <td>里斯</td>
+        <td>女</td>
+        <td>田径</td>
+      </tr>
+      <tr class="parent" id="row_02">
+        <td colspan="3">前台开发组</td>
+      </tr>
+      <tr class="child_row_02">
+        <td>王五</td>
+        <td>男</td>
+        <td>山海</td>
+      </tr>
+      <tr class="child_row_02">
+        <td>找刘</td>
+        <td>女</td>
+        <td>山东</td>
+      </tr>
+      <tr class="parent" id="row_03">
+        <td colspan="3">前台开发组</td>
+      </tr>
+      <tr class="child_row_03">
+        <td>七八</td>
+        <td>男</td>
+        <td>乌鲁木齐</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="msg">
+    <div class="mag_caption">
+      <span class="bigger" style="background:#666">放大</span>
+      <span class="smaller" style="background:#666">缩小</span>
+    </div>
+    <div>
+      <p id="para">
+        This is some text for test!
+      </p>
+    </div>
+  </div>
+
+  <div class="tab">
+    <div class="tab_menu">
+      <ul>
+        <li class="selected">时事</li>
+        <li>体育</li>
+        <li>娱乐</li>
+      </ul>
+    </div>
+    <div class="tab_box">
+      <div>时事信息</div>
+      <div class="hide">体育信息</div>
+      <div class="hide">娱乐信息</div>
+    </div>
+  </div>
+</body>
+<script src="5-表格应用.js"></script>
+
+</html>

@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    width: 100px;
+    height: 25px;
+    border: 1px solid #666;
+    padding: 0 10px;
+}
+li{
+    display: inline-block;
+    list-style: none;
+    width: 15px;
+    height: 15px;
+    margin-top: 5px;
+}
+#skin0{
+    background-color: yellow;
+}
+#skin1{
+    background-color: red;
+}
+.selected{
+    box-shadow: 0px 0px 5px blue;
+}
+.content{
+    background-color: yellow;
+    color: #000;
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<!-- 2017/10/19 完成 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <table class="table" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>
+                    <a href="javascript:;" id="addBtn" class="inputText">添加</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        background-color: #eee;
+    }
+
+    .table {
+        width: 600px;
+        margin: 0 auto;
+        margin-top: 30px;
+    }
+
+    .table tr td {
+        width: 100px;
+        height: 40px;
+        background-color: #fff;
+        font-size: 15px;
+        border-radius: 3px;
+        text-align: center;
+    }
+
+    .table tr td:hover {
+        background-color: rgb(185, 178, 178);
+    }
+
+    .inputText {
+        cursor: pointer;
+        text-decoration: none;
+        color: #333;
+        padding: 0px 5px;
+    }
+
+    .inputtd {
+        -web-kit-appearance: none;
+        border-radius: 3px;
+        border: 1px solid #c8cccf;
+        outline: none;
+        width: 96px;
+        height: 36px;
+    }
+</style>
+<script>
+    $(function () {
+        var main_obj = $('.table');
+
+        function delHandel() {
+            var meBtn = $(this);
+            meBtn.parent().parent().remove();
+        }
+
+        function editHandel() {
+            var edit_obj = $(this).parent().parent();
+            var row_obj = $("<tr></tr>");
+            for (var i = 0; i < 5; i++) {
+                var input_obj = $("<td><input type='text' class='inputtd'/></td>");
+                var edit_val = edit_obj.find("td:eq(" + i + ")").html();
+                input_obj.find("input").val(edit_val);
+                row_obj.append(input_obj);
+            }
+            var fin_obj = $("<td></td>");
+            var cancelBtn = $("<a class='inputText'>取消</a>");
+            cancelBtn.click(function(){
+                var me_obj = $(this).parent().parent();
+                edit_obj.find("a:eq("+0+")").click(delHandel);
+                edit_obj.find("a:eq("+1+")").click(editHandel);
+                me_obj.replaceWith(edit_obj);
+            });
+            var saveBtn = $("<a class='inputText'>保存</a>");
+            saveBtn.click(function () {
+                var sava_obj = $(this).parent().parent();
+                var input_data = sava_obj.find('input');
+                var data = {};
+                for (var i = 0; i < 5; i++) {
+                    data['col' + i] = input_data[i].value;
+                }
+                var new_obj = createRow(data);
+                sava_obj.replaceWith(new_obj);
+            })
+            fin_obj.append(cancelBtn);
+            fin_obj.append(saveBtn);
+            row_obj.append(fin_obj);
+            edit_obj.replaceWith(row_obj);
+        }
+
+        function createRow(data) {
+            var row_obj = $("<tr></tr>");
+            for (var k in data) {
+                var block_obj = $("<td></td>");
+                block_obj.html(data[k]);
+                row_obj.append(block_obj);
+            }
+            var fin_obj = $("<td></td>");
+            var cancelBtn = $("<a class='inputText'>删除</a>");
+            cancelBtn.click(delHandel);
+            var editBtn = $("<a class='inputText'>编辑</a>");
+            editBtn.click(editHandel);
+            fin_obj.append(cancelBtn);
+            fin_obj.append(editBtn);
+            row_obj.append(fin_obj);
+            return row_obj;
+        }
+        $('#addBtn').click(function () {
+            var row_obj = $("<tr></tr>");
+            for (var i = 0; i < 5; i++) {
+                var block_obj = $("<td><input type='text' class='inputtd'/></td>");
+                row_obj.append(block_obj);
+            }
+            var fin_obj = $("<td></td>");
+            var cancelBtn = $("<a class='inputText'>取消</a>");
+            cancelBtn.click(delHandel);
+            var saveBtn = $("<a class='inputText'>保存</a>");
+            saveBtn.click(function () {
+                var sava_obj = $(this).parent().parent();
+                var input_data = sava_obj.find('input');
+                var data = {};
+                for (var i = 0; i < 5; i++) {
+                    data['col' + i] = input_data[i].value;
+                }
+                var new_obj = createRow(data);
+                sava_obj.replaceWith(new_obj);
+            })
+            fin_obj.append(cancelBtn);
+            fin_obj.append(saveBtn);
+            row_obj.append(fin_obj);
+            main_obj.append(row_obj);
+        })
+    })
+</script>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="..\js\jquery-3.2.1.js"></script>
+  <title>显示隐藏</title>
+</head>
+
+<body>
+  <div class="box">
+    <ul>
+      <li>item1</li>
+      <li>item2</li>
+      <li>item3</li>
+      <li>item4</li>
+      <li>item5</li>
+      <li>item6</li>
+      <li>item7</li>
+      <li>item8</li>
+      <li>item9</li>
+      <li>item10</li>
+      <li>item11</li>
+      <li>item12</li>
+      <li>item13</li>
+      <li>item14</li>
+      <li>其他</li>
+    </ul>
+  </div>
+  <div class="showmore">
+    <span>显示全部品牌</span>
+  </div>
+</body>
+<script>
+  $('li:gt(6):not(:last)').hide(); //第7条开始隐藏后面的品牌(最后一个除外)
+  $('.showmore').click(function () {
+    if ($('.showmore span:contains("全部")').length != 0) { //可以换成toggle() 不需要if else 判断
+      //if ($('li:gt(4):not(:last)').is(":visible")) {
+      $('li').show();
+      $('.showmore span')
+        .text("精简显示品牌");
+      $('ul li').filter(':contains("item2"),:contains("item5")')
+        .addClass('like');
+    } else if ($('.showmore span:contains("精简")').length != 0) {
+      $('li:gt(4):not(:last)').hide();
+      $('.showmore span')
+        .text("全部显示品牌");
+      $('ul li').removeClass('like');
+    }
+  })
+</script>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .box {
+    width: 100%;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  li {
+    display: inline-block;
+    list-style: none;
+    text-align: center;
+    background-color: #eee;
+    width: 33%;
+    margin-top: 10px;
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .showmore {
+    margin: 0 auto;
+    width: 150px;
+    text-align: center;
+    margin-top: 30px;
+    line-height: 40px;
+    background-color: #435;
+    border-radius: 10px;
+  }
+
+  .like {
+    color: #547;
+  }
+</style>
+
+</html>

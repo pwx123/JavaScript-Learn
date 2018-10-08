@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="./6-ajax.js"></script>
+    <title>6-ajax</title>
+</head>
+
+<body>
+    <div>
+        <input type="button" value="Ajax提交" onclick="myAjax()">
+        <div id="resText"></div>
+    </div>
+    <div>
+        <input type="button" value="Load提交" onclick="myLoad()">
+        <div id="resText1"></div>
+    </div>
+    <div>
+        <input type="button" value="豆瓣api" onclick="myJson()">
+        <div class="loading" style="display:none">加载中...</div>
+        <div id="resText2"></div>
+    </div>
+    <form action="#" id="form1">
+        <p>评论:</p>
+        <p>姓名:
+            <input type="text" name="username" id="username" />
+        </p>
+        <p>内容:
+            <textarea name="content" id="content" rows="2" cols="20"></textarea>
+        </p>
+        <p><input type="button" value="提交" id="send"></p>
+    </form>
+</body>
+
+</html>

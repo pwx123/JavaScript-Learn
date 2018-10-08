@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="./6-聊天室.js"></script>
+    <title>6-聊天室</title>
+    <style>
+        body {
+            font-size: 12px;
+        }
+
+        #messagewindow {
+            height: 250px;
+            border: 1px solid;
+            padding: 5px;
+            overflow: auto;
+        }
+
+        input {
+            margin-top: 5px;
+        }
+
+        #wrapper {
+            margin: auto;
+            width: 438px;
+        }
+
+        #loading {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <span id="loading">加载中...</span>
+        <p id="messagewindow">
+        </p>
+        <form id="chatform">
+            姓名：
+            <input type="text" id="author" size="50">
+            <br/> 内容：
+            <input type="text" id="msg" size="50">
+            <br/>
+            <input type="submit" value="发送">
+            <br/>
+        </form>
+    </div>
+</body>
+
+</html>

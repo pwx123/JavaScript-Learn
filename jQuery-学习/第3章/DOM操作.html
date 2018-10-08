@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="..\js\jquery-3.2.1.js"></script>
+</head>
+<style>
+  .banana {
+    color: yellow;
+    height: auto;
+  }
+
+  .long {
+    font-size: 30px;
+  }
+
+  input {
+    display: block;
+  }
+
+  .relative {
+    position: relative;
+    background-color: #324;
+    width: 150px;
+  }
+
+  .pictip {
+    display: inline-block;
+    position: relative;
+  }
+
+  #bigger {
+    display: none;
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    background-color: #000;
+    opacity: 0.3;
+  }
+
+  .piclay {
+    display: none;
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 2px solid #222;
+    background-image: url(../img/logo.png);
+    background-repeat: no-repeat;
+    background-size: 300%;
+  }
+</style>
+
+<body>
+  <ul>
+    <li>苹果</li>
+    <li>菠萝</li>
+    <li title="香蕉" class="banana">
+      <a>香蕉</a>
+    </li>
+    <li title="西瓜">西瓜</li>
+  </ul>
+  <input type="text" id="Email" value="请输入邮箱地址" />
+  <input type="text" id="pwd" value="请输入密码" />
+  <input type="button" value="登陆">
+
+  <select name="" id="multiple" multiple="multiple">
+    <option value="选择1" selected="selected">选择1</option>
+    <option value="选择2">选择2</option>
+    <option value="选择3">选择3</option>
+    <option value="选择4" selected>选择4</option>
+  </select>
+  <div>
+    <div class="relative">
+      <p>position:relative</p>
+    </div>
+  </div>
+  <p>
+    <a href="" class="tooltip" title="这是我的超链接提示">提示1</a>
+  </p>
+  <p>
+    <a href="" class="tooltip" title="这是我的超链接提示">提示2</a>
+  </p>
+  <p>
+    <a href="" title="这是自带的超链接提示">自带提示1</a>
+  </p>
+  <p>
+    <a href="" title="这是自带的超链接提示">自带提示2</a>
+  </p>
+  <div class="pictip">
+    <a href="">
+      <img src="../img/logo.png">
+      <div id='bigger'></div>
+    </a>
+    <div class="piclay">
+    </div>
+  </div>
+</body>
+<script src="3.js"></script>
+</html>

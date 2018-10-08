@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="..\js\jquery-3.2.1.js"></script>
+    <title>表单应用</title>
+</head>
+<style>
+    .focus {
+        border: 1px solid rgb(0, 72, 228);
+        background-color: #eee;
+    }
+
+    .myspan {
+        background-color: rgb(243, 132, 132);
+    }
+
+    .content {
+        display: inline-block;
+    }
+
+    .content select {
+        margin-left: 22px;
+    }
+
+    .content span {
+        background: rgb(0, 50, 107);
+        display: inline-block;
+        margin-top: 5px;
+        color: #eee;
+        border-radius: 5px;
+        padding: 3px 5px;
+    }
+
+    .content span:hover {
+        cursor: pointer;
+    }
+
+    .msg {
+        color: red;
+    }
+</style>
+
+<body>
+    <form action="#" method="POST" id="regForm">
+        <fieldset>
+            <legend>个人基本信息</legend>
+            <div>
+                <label for="username">名称:</label>
+                <input type="text" id="username">
+            </div>
+            <div>
+                <label for="password">密码:</label>
+                <input type="text" id="password">
+            </div>
+            <div>
+                <div>
+                    <span id="bigger" class="myspan">放大</span>
+                    <span id="smaller" class="myspan">缩小</span>
+                    <span id="scrollTop" class="myspan">向上</span>
+                    <span id="scrollDown" class="myspan">向下</span>
+                </div>
+                <label for="msg">信息:</label>
+                <textarea id="msg" cols="15" rows="7">text放大缩小测试text放大缩小测试text放大缩小测试text放大缩小测试text放大缩小测试text放大缩小测试text放大缩小测试text放大缩小测试text放大缩小测试
+                </textarea>
+            </div>
+        </fieldset>
+    </form>
+    <form action="#">
+        <p>你爱好的运动是?</p>
+        <input type="checkbox" name="allOrNot" id="checkedAll1">全选/全不选
+        <br/>
+        <input type="checkbox" name="items" value="足球" checked>足球
+        <input type="checkbox" name="items" value="篮球">篮球
+        <input type="checkbox" name="items" value="羽毛球">羽毛球
+        <input type="checkbox" name="items" value="排球">排球
+        <br/>
+        <input type="button" value="全  选" id="checkedAll">
+        <input type="button" value="全不选" id="checkedNo">
+        <input type="button" value="反  选" id="checkRev">
+        <input type="button" value="提  交" id="send">
+    </form>
+
+    <div class="content">
+        <select multiple id="select1" style="width:100px;height:160px">
+            <option value="1">选项1</option>
+            <option value="2">选项2</option>
+            <option value="3">选项3</option>
+            <option value="4">选项4</option>
+            <option value="5">选项5</option>
+            <option value="6">选项6</option>
+            <option value="7">选项7</option>
+            <option value="8">选项8</option>
+        </select>
+        <div>
+            <span id="add">选中添加到右边&lt;&gt;</span>
+            <br/>
+            <span id="add_all">全部添加到右边&gt;&gt;</span>
+        </div>
+    </div>
+    <div class="content">
+        <select multiple id="select2" style="width:100px;height:160px">
+        </select>
+        <div>
+            <span id="remove">&lt;&lt;选中删除到左边</span>
+            <br/>
+            <span id="remove_all">&lt;&lt;全部删除到左边</span>
+        </div>
+    </div>
+
+    <form method="post" id="pwdFrom">
+        <fieldset>
+            <div class="int">
+                <label for="username1">用户名:</label>
+                <input type="text" id="username1" class="required">
+                <span class="msg"></span>
+            </div>
+            <div class="int">
+                <label for="email">邮箱:</label>
+                <input type="text" id="email" class="required">
+                <span class="msg"></span>
+            </div>
+            <div class="int">
+                <label for="info">资料:</label>
+                <input type="text" id="info">
+            </div>
+            <div class="sub">
+                <input type="submit" value="提交" id="submit">
+                <input type="reset" value="重置" id="reset">
+            </div>
+        </fieldset>
+    </form>
+</body>
+<script src="5-表单应用.js"></script>
+
+</html>

@@ -1,0 +1,36 @@
+body {
+    background-color: #899BA5;
+}
+
+.table {
+    width: 700px;
+    margin: 0 auto;
+}
+
+td {
+    font-size: 20px;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    color: black;
+    cursor: pointer;
+    background-color: white;
+}
+
+td:hover {
+    background-color: #aac;
+}
+
+input.txtField {
+    width: 90px;
+    height: 30px;
+}
+
+.optLink {
+    text-decoration: none;
+    color: #f46948;
+}
+
+.optLink:hover {
+    color: #c03;
+}

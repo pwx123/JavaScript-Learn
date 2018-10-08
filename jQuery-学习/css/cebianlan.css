@@ -1,0 +1,92 @@
+.toolbar {
+    position: fixed;
+    left: 100%;
+    bottom: 100px;
+    margin-left: -52px;
+}
+
+.toolbar-item,
+.layer {
+    background: url(../img/toolbar.png);
+    background-repeat: no-repeat;
+}
+
+.toolbar-item {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    margin-top: 1px;
+    display: block;
+}
+
+.toolbar-weixin {
+    transition: 1s;
+    background-position: 0 -798px;
+}
+
+.toolbar-weixin .layer {
+    position: absolute;
+    right: 46px;
+    width: 172px;
+    height: 212px;
+    bottom: -10px;
+    background-position: 0 0;
+    opacity: 0;
+    transform-origin: 95% 95%;
+    transform: scale(0.01);
+    transition: all 1s;
+}
+
+.toolbar-weixin:hover {
+    background-position: 0 -860px;
+}
+
+.toolbar-weixin:hover .layer {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.toolbar-feedback {
+    transition: 1s;
+    background-position: 0 -426px;
+}
+
+.toolbar-feedback:hover {
+    background-position: 0 -488px;
+}
+
+.toolbar-app {
+    transition: 1s;
+    background-position: 0 -550px;
+}
+
+.toolbar-app .layer {
+    position: absolute;
+    right: 46px;
+    width: 172px;
+    height: 194px;
+    bottom: -10px;
+    background-position: 0 -222px;
+    opacity: 0;
+    transform-origin: 95% 95%;
+    transform: scale(0.01);
+    transition: all 1s;
+}
+
+.toolbar-app:hover {
+    background-position: 0 -612px;
+}
+
+.toolbar-app:hover .layer {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.toolbar-top {
+    transition: 1s;
+    background-position: 0 -674px;
+}
+
+.toolbar-top:hover {
+    background-position: 0 -736px;
+}

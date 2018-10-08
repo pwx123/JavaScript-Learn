@@ -1,0 +1,66 @@
+body,
+html,
+h2,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+.current {
+    color: rgb(255, 5, 5);
+}
+
+.v_caption {
+    height: 50px;
+    width: 100%;
+    background-color: rgba(61, 218, 218, 0.486);
+    border-radius: 5px;
+}
+
+.v_caption .cartoon {
+    width: auto;
+    float: left;
+    color: rgba(225, 0, 255, 0.692);
+    line-height: 50px;
+    margin-left: 40px;
+}
+
+.v_caption .highlight_tip {
+    width: auto;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 40px;
+}
+
+.v_caption .highlight_tip span {
+    padding: 0 6px;
+}
+
+.v_caption .change_btn {
+    line-height: 50px;
+}
+
+.v_content .v_content_list {
+    width: 1000px;
+    margin: 20px auto;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.v_content ul {
+    position: relative;
+    height: 150px;
+    font-size: 0;
+}
+
+.v_content ul li {
+    display: inline-block;
+    list-style: none;
+    width: 240px;
+    height: 150px;
+    background: rgb(24, 130, 179);
+    font-size: 50px;
+    margin-left: 10px;
+}

@@ -1,0 +1,101 @@
+body {
+    background: #fdfcf8;
+}
+
+.contain-center {
+    margin: 0 auto;
+    width: 1100px;
+}
+
+.header {
+    height: 150px;
+}
+
+.header .logo {
+    float: left;
+    margin-top: 30px;
+    font-size: 50px;
+}
+
+.header .logo a {
+    width: 240px;
+    height: 66px;
+}
+
+.header .logo a:hover {
+    border-bottom: 3px solid red;
+}
+
+.header .search {
+    width: 300px;
+    position: relative;
+    float: right;
+    margin-top: 30px;
+}
+
+.header .search .search-input {
+    width: 200px;
+    height: 30px;
+    margin-top: 25px;
+    margin-right: 10px;
+}
+
+.header .search .search-btn {
+    width: 30px;
+    height: 30px;
+    margin-top: 26px;
+    line-height: 30px;
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    background: #ca7661;
+}
+
+.nav {
+    background: #e8e7e3;
+}
+
+.nav .nav-contents {
+    height: 50px;
+}
+
+.nav .nav-contents .nav-content {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.nav .nav-contents .nav-content a {
+    height: 50px;
+    font-size: 20px;
+    padding: 0 18px;
+    color: #3e3e3e;
+}
+
+.nav .nav-contents .nav-content a:hover {
+    color: #fff;
+    background: #3f3f3f;
+}
+.contain {
+    height: 100%;
+}
+.contain .contain-left {
+    float: left;
+    width: 200px;
+    height: 100%;
+    background: #3e3e3e;
+}
+
+.contain .contain-main {
+    float: left;
+    width: 700px;
+    height: 100%;
+}
+
+.contain .contain-right {
+    float: left;
+    width: 200px;
+    height: 100%;
+    background: #3e3e3e;
+}
