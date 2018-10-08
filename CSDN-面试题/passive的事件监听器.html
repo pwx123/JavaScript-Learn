@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>passive的事件监听器</title>
+</head>
+
+<body>
+  <a href="https://blog.csdn.net/tengxy_cloud/article/details/52858742">详细介绍</a>
+  <ul>
+    <li>1
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>2
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>3
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>4
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>5
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>6
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>7
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>8
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>9
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>10
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>11
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>12
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>13
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>14
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>15
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>16
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>17
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>18
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>19
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>20
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>21
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>22
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>23
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>24
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+    <li>25
+      <img src="./CSDN100道面试题/img/pic-1.png" alt="">
+    </li>
+  </ul>
+  <script>
+    var i = 0
+    var t
+    var detail = 10
+
+    // while (1) { //即使死循环 也能流畅滑动
+    //   if (i % 2 == 0) {
+    //     i++
+    //   } else {
+    //     i--
+    //   }
+    // }
+    document.addEventListener('scroll', function () {}, {
+      passive: true,
+    })
+    document.addEventListener('touchstart', function () {}, {
+      passive: true,
+    })
+    document.addEventListener('touchmove', function () {}, {
+      passive: true,
+    })
+
+  </script>
+</body>
+
+</html>

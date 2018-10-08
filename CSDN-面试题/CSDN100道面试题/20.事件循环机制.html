@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>20.事件循环机制</title>
+</head>
+
+<body>
+  <a href="./20.事件循环机制.txt">事件循环机制</a>
+  <br>
+  <a href="https://yangbo5207.github.io/wutongluo/ji-chu-jin-jie-xi-lie/shi-er-3001-shi-jian-xun-huan-ji-zhi.html">详解</a>
+</body>
+<script>
+  // for (var i = 0; i < 5; i++) { 每隔一秒输出5
+  //   (function () { //没有引用传入的i
+  //     setTimeout(function () {
+  //       console.log(i);
+  //     }, i * 1000);
+  //   })(i);
+  // }
+
+  // for (var i = 0; i < 5; i++) { //立刻输出01234 返回值undefined,每隔一秒没有函数调用
+  //   setTimeout((function () {
+  //     console.log(i);
+  //   })(i), i * 1000)
+  // }
+  setTimeout(function () {
+    console.log(1)
+  }, 0)
+  new Promise(function executor(resolve) {
+    console.log(2)
+    for (var i = 0; i < 10000; i++) {
+      i == 9999 && resolve()
+    }
+    console.log(3)
+  }).then(function () {
+    console.log(4)
+  })
+  console.log(5)
+
+</script>
+
+</html>

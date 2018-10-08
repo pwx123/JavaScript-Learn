@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>16.不使用循环生成特定数组</title>
+</head>
+
+<body>
+  <div>不使用循环语句（包括map、forEach方法）实现一个100长度的数组，索引值和值相同的数组[0,1,2,3,4,5........99]</div>
+</body>
+<script>
+  // 初始化长度为100的空数组
+  // 1
+  var arr = new Array(100)
+  var arr1 = new Array(100)
+  // 2
+  var arr2 = []
+  arr2.length = 100
+  // 3
+  var arr4 = Array.from({
+    length: 100
+  })
+
+  // 复制value = key
+  // 1
+  arr = [...arr.keys()]
+  console.log(arr)
+  // 2
+  arr4 = Array.from(arr4.keys())
+  console.log(arr4)
+
+  function fn(arrs, val) { // 递归函数
+    if (val >= 100) {
+      return arrs
+    }
+    arrs.push(val)
+    return fn(arrs, val + 1)
+  }
+  var arr5 = fn([], 0)
+  console.log(arr5)
+
+</script>
+
+</html>

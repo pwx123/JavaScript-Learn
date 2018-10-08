@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>26.数组去重</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  var arr = [1, 2, 3, 3, 1, 4, 2, 3]
+
+  function filter1(arr) { // ES6 Set
+    return [...new Set(arr)]
+  }
+  console.log(filter1(arr))
+
+  function filter2(arr) { // Object属性名唯一
+    var obj = {}
+    var arr2 = []
+    for (let i = 0; i < arr.length; i++) {
+      if (!obj[arr[i]]) {
+        obj[arr[i]] = 1
+        arr2.push(arr[i])
+      }
+    }
+    return arr2
+  }
+  console.log(filter2(arr))
+
+  function filter3(arr) { // 双重循环
+    var arr2 = [arr[0]]
+    for (var i = 1; i < arr.length; i++) {
+      for (var j = 0; j < arr2.length; j++) {
+        if (arr[i] == arr2[j]) {
+          break
+        }
+        if (j == (arr2.length - 1)) {
+          arr2.push(arr[i])
+        }
+      }
+    }
+    return arr2
+  }
+  console.log(filter3(arr))
+
+  function filter4(arr) { // 双重循环
+    var len = arr.length
+    for (var i = 0; i < len; i++) {
+      for (var j = i + 1; j < len; j++) {
+        if (arr[i] === arr[j]) {
+          arr.splice(j, 1)
+          j--
+          len--
+        }
+      }
+    }
+    return arr
+  }
+  console.log(filter4(arr))
+
+  function filter5(arr) { //
+    var arr2 = []
+    for (var i = 0; i < arr.length; i++) {
+      if (arr2.indexOf(arr[i]) == -1) {
+        arr2.push(arr[i])
+      }
+    }
+    return arr2
+  }
+  console.log(filter5(arr))
+
+</script>
+
+</html>

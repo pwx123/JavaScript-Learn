@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>12.js基础数据类型和引用类型</title>
+</head>
+
+<body>
+  <div>基本数据类型(6):Undefined,Null,Boolean,Number,String,Symbol</div>
+  <div>引用数据类型(1):Object(Array,Date,RegExp,Function)</div>
+</body>
+<script>
+  var f = Symbol()
+  var obj = {
+    a: undefined,
+    b: null, // object
+    c: true,
+    d: 2,
+    e: 'str',
+    f: f
+  }
+  var obj2 = {
+    a: [12, 2],
+    b: new Date(),
+    c: /w/,
+    d: function () {
+      console.log(1)
+    }
+  }
+
+  function getType (item) {
+    console.log(Object.prototype.toString.call(item))
+  }
+
+  console.log('基础类型')
+  for (var item in obj) {
+    console.log(typeof obj[item])
+  }
+  for (item in obj) {
+    getType(obj[item])
+  }
+  console.warn('引用类型')
+  for (item in obj2) {
+    console.log(typeof obj2[item])
+  }
+  for (item in obj2) {
+    getType(obj2[item])
+  }
+</script>
+
+</html>

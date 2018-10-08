@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <title>jsonp原理</title>
+</head>
+
+<body>
+  <div>1.在同源策略下;在某个服务器下的页面是无法获取到该服务器以外的数据的;Jquery中ajax 的核心是通过 XmlHttpRequest获取非本页内容，而jsonp的核心则是动态添加 script标签来调用服务器提供的 js脚本</div>
+  <div>2.当我们正常地请求一个JSON数据的时候，服务端返回的是一串 JSON类型的数据，而我们使用 JSONP模式来请求数据的时候服务端返回的是一段可执行的 JavaScript代码。因为jsonp 跨域的原理就是用的动态加载 script的src
+    ，所以我们只能把参数通过 url的方式传递, 所以jsonp的 type类型只能是get ！</div>
+  <code>
+    $.ajax({ 
+      url: 'http://192.168.1.114/yii/demos/test.php', //不同的域 type: 'GET', // jsonp模式只有GET 是合法的 
+      data: { 'action': 'aaron'
+    }, dataType: 'jsonp', // 数据类型 jsonp: 'backfunc', // 指定回调函数名，与服务器端接收的一致，并回传回来 }) 其实jquery 内部会转化成 http://192.168.128.99/yii/demos/test.php?backfunc=jQuery2030038573939353227615_1402643146875&action=aaron
+    然后动态加载 script type="text/javascript"src="http://192.168.1.114/yii/demos/test.php?backfunc= 然后后端就会执行backfunc(传递参数 )，把数据通过实参的形式发送出去。
+  </code>
+</body>
+
+</html>

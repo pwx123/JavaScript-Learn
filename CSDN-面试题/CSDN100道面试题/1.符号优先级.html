@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.符号优先级</title>
+</head>
+
+<body>
+</body>
+<script>
+  var a = '11' * 2
+  var a1 = '11' + 2
+  console.log(a) // 22
+  console.log(a1) // 112
+
+  var b = 'a8' * 3
+  console.log(b) // NaN
+
+  var c = '8a' * 3
+  console.log(c) // NaN
+
+  var d = parseInt('8a') * 3
+  console.log(d) // 24
+
+  var e = 2
+  var f = 3
+
+  var g = e++ + f // 2,3
+  console.log(g)
+  console.log(e, f)
+
+  g = e++ + (++f) // 3,4
+  console.log(g)
+  console.log(e, f)
+</script>
+
+</html>

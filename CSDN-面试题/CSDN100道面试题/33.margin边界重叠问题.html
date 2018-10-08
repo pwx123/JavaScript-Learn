@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>33.margin边界重叠问题</title>
+</head>
+
+<body>
+  <a href="https://www.cnblogs.com/zhangmingze/articles/4664074.html">33.margin边界重叠问题</a>
+  <div>只在垂直方向重叠</div>
+  <ul>
+    <li> 块元素在垂直方向上的margin是很奇怪的，会有重叠现象。</li>
+    <li>如果display都是block，有三种情况</li>
+    <li>外间距均为正数，竖直方向上会选择最大的外边距作为间隔</li>
+    <li>一正一负，间距 = 正 - |负|</li>
+    <li>两个负，间距 = 0 - 绝对值最大的那个</li>
+    <li>设置display: inline-block的盒子不会有margin重叠，position: absolute的也不会出现。</li>
+  </ul>
+</body>
+
+</html>

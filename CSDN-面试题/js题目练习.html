@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js题目练习</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  console.group('1.函数传参')
+  /* 将数组 arr 中的元素作为调用函数 fn 的参数 */
+  function fn1(greeting, name, punctuation) {
+    var str = greeting + ', ' + name + (punctuation || '!');
+    return str
+  }
+  var arr = ['Hello', 'Ellie', '!']
+
+  function argsAsArray(fn, arr) {
+    return fn(...arr);
+    //return fn.apply(this,arr);
+  }
+  console.log(fn1(...arr))
+  console.log(argsAsArray(fn1, arr))
+  console.groupEnd()
+
+
+  console.group('2.函数的上下文')
+  /* 将函数 fn 的执行上下文改为 obj 对象 */
+  function fn2() {
+    return this.greeting + ', ' + this.name + '!!!'
+  };
+  var obj = {
+    greeting: 'Hello',
+    name: 'Rebecca'
+  }
+
+  function speak(fn2, obj) {
+    return fn2.call(obj)
+  }
+  console.log(speak(fn2, obj))
+  console.groupEnd()
+
+
+  console.group('3.返回函数')
+  /*   实现函数 function Function，调用之后满足如下条件：
+    1、返回值为一个函数 f
+    2、调用返回的函数 f，返回值为按照调用顺序的参数拼接，拼接字符为英文逗号加一个空格，即 ', '
+    3、所有函数的参数数量为 1，且均为 String 类型 */
+  function functionFunction(str) {
+    return function f(str1) {
+      return str + ',' + str1
+    }
+  }
+  console.log(functionFunction('Hello')('world'))
+  console.groupEnd()
+
+
+  console.group('4.使用闭包')
+  /*   实现函数 makeClosures，调用之后满足如下条件：
+    1、返回一个函数数组 result，长度与 arr 相同
+    2、运行 result 中第 i 个函数，即 result[i]()，结果与 fn(arr[i]) 相同 */
+  var arr = [1, 2, 3]
+
+  function fn3(x) {
+    return x * x;
+  }
+
+  function makeClosures(arr, fn3) {
+    var result = [];
+    for (var i = 0; i < arr.length; i++) {
+      (function (value) {
+        result[i] = function () {
+          return fn3(value)
+        }
+      })(arr[i])
+    }
+    return result
+  }
+  console.log(fn3(arr[2]))
+  var result = makeClosures(arr, fn3)
+  console.log(result[2]())
+  console.groupEnd()
+
+
+  console.group('5.二次封装函数')
+  /*   已知函数 fn 执行需要 3 个参数。请实现函数 partial，调用之后满足如下条件：
+    1、返回一个函数 result，该函数接受一个参数
+    2、执行 result(str3) ，返回的结果与 fn(str1, str2, str3) 一致 */
+  var sayIt = function (greeting, name, punctuation) {
+    return greeting + ', ' + name + (punctuation || '!')
+  };
+
+  function partial(fn, str1, str2) {
+    var result = function (str3) {
+      return fn(str1, str2, str3)
+    }
+    return result
+  }
+  var result = partial(sayIt, 'Hello', 'Ellie')
+  console.log(result('!!!'))
+  console.log(sayIt('Hello', 'Ellie', '!!!'))
+  console.groupEnd()
+
+
+  console.group('6.使用arguments')
+  /*   函数 useArguments 可以接收 1 个及以上的参数。
+    请实现函数 useArguments，返回所有调用参数相加后的结果。
+    本题的测试参数全部为 Number 类型，不需考虑参数转换。 */
+  function useArguments() {
+    var sum = 0
+    for (var i = 0; i < arguments.length; i++) {
+      sum += arguments[i]
+    }
+    return sum
+  }
+  console.log(useArguments(1, 2, 3, 4))
+  console.groupEnd()
+
+
+  console.group('7.使用apply调用函数')
+  /*   实现函数 callIt，调用之后满足如下条件
+    1、返回的结果为调用 fn 之后的结果
+    2、fn 的调用参数为 callIt 的第一个参数之后的全部参数 */
+  function callIt(fn) {
+    var arr = Array.prototype.slice.call(arguments, 1);
+    fn.apply(null, arr)
+  }
+
+  function fn6(...arr) {
+    console.log(arr)
+  }
+  callIt(fn6, 1, 2, 3, 4)
+  fn6(1, 2, 3, 4)
+  console.groupEnd()
+
+
+  console.group('8.二次封装函数')
+  /*   实现函数 partialUsingArguments，调用之后满足如下条件：
+    1、返回一个函数 result
+    2、调用 result 之后，返回的结果与调用函数 fn 的结果一致
+    3、fn 的调用参数为 partialUsingArguments 的第一个参数之后的全部参数以及 result 的调用参数 */
+  function fn7(...arr) {
+    return arr
+  }
+
+  function partialUsingArguments(fn7) {
+    var arr = Array.prototype.slice.call(arguments, 1)
+    var result = function () {
+      return fn7.apply(null, arr)
+    }
+    return result
+  }
+  console.log(fn7(1, 2, 3))
+  console.log(partialUsingArguments(fn7, 1, 2, 3)())
+  console.groupEnd()
+
+</script>
+
+</html>

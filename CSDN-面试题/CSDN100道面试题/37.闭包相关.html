@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>37.闭包相关</title>
+</head>
+
+<body>
+  <ul>
+    <li>因为在闭包内部保持了对外部活动对象的访问,但外部的变量却无法直接访问内部,避免了全局污染;</li>
+    <li>可以当做私有成员,弥补了因js语法带来的面向对象编程的不足;</li>
+    <li>可以长久的在内存中保存一个自己想要保存的变量.</li>
+  </ul>
+
+  <script>
+    function fn() { // 闭包
+      var i = 0
+      return function () {
+        i = i + 1
+        return i
+      }
+    }
+    var add = fn()
+    console.log(add())
+    console.log(add())
+    // console.log(i) i is not defined
+
+    function fn2() {
+      for (var i = 0; i < 3; i++) {
+        var value = i
+        setTimeout(() => {
+          console.log('setTimeOut1后执行:' + value) // 都是2
+        }, 1000)
+      }
+      console.log(i)
+      console.log(value)
+    }
+    fn2()
+
+    function fn3() {
+      for (var i = 0; i < 3; i++) {
+        (
+          function (test) {
+            var value = i
+            setTimeout(() => {
+              console.log('setTimeOut2后执行:' + value, test) // 都是2
+            }, 1000)
+          }
+        )(2)
+      }
+      console.log(i)
+      // console.log(value) value is no defined
+    }
+
+    fn3()
+  </script>
+</body>
+
+</html>

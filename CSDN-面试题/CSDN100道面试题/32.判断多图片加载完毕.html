@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>32.判断多图片加载完毕</title>
+  <script src="./js/jquery-3.2.1.js"></script>
+</head>
+
+<body>
+  <img src="http://img.zcool.cn/community/01c53f5567f0930000016756edc878.jpg@1280w_1l_2o_100sh.png" alt="" id="pic1" class="pic">
+  <img src="http://img.taopic.com/uploads/allimg/120727/201995-120HG1030762.jpg" alt="" id="pic2" class="pic">
+  <img src="http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg" alt="" id="pic3" class="pic">
+</body>
+<script>
+  var counter = 0
+  var queryInterval = 1
+  var pics = document.getElementsByClassName('pic')
+  for (let i = 0; i < pics.length; i++) {
+    pics[i].onload = function () {
+      counter++
+      // console.log('pic' + i + ' is load')
+    }
+  }
+
+  function allLoad (callback) {
+    if (counter < pics.length) {
+      console.log('load over' + counter + ' pic')
+      setTimeout(allLoad, queryInterval, callback)
+    } else {
+      console.log('over')
+      callback()
+    }
+  }
+  function callback () {
+    console.log('load over')
+  }
+  setTimeout(allLoad, queryInterval, callback)
+</script>
+
+</html>

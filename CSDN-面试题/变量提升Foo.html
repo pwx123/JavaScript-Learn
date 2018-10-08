@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>变量提升</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  function Foo() {
+    // this.getName = function () {
+    //   console.log(6);
+    // }
+    getName = function () {
+      console.log(1);
+    };
+    console.log(this);
+    return this;
+  }
+  Foo.getName = function () {
+    console.log(2);
+  }
+  Foo.prototype.getName = function () {
+    console.log(3);
+  }
+  var getName = function () {
+    console.log(4);
+  }
+
+  function getName() {
+    console.log(5);
+  }
+  //以上代码可以解析顺序为
+  // function getName() {
+  //   console.log(5);
+  // }
+  //var getName
+  //getName = function(){
+  //   console.log(4);
+  // }
+  Foo.getName(); //2
+  getName(); //4
+  Foo().getName(); //1 没有new this指向window 而且重写了getName 
+  getName(); //1
+  new Foo.getName(); //2 
+  new Foo().getName(); //3 new改变了this指向 this指向Foo 
+  new new Foo().getName(); //3 this指向Foo
+  var a = new Foo();
+
+  a.getName(); //3
+
+</script>
+
+</html>

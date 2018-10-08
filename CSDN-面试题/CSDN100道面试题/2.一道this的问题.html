@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2.一道this的问题</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  var num = 10
+  var obj = {
+    num: 8,
+    inner: {
+      num: 6,
+      print: function () {
+        // var num = 999;
+        console.log(this)
+        console.log('num:' + num + ',this.num:' + this.num)
+      }
+    }
+  }
+  num = 888 // 覆盖了10
+  console.log(window.num)
+  obj.inner.print() // num:888,this.num:6
+  // num 作用域链向上搜索，只搜索到print这个函数，继续向上到window。
+  // this.num obj.inner调用 this指向inner
+  console.log(obj.inner.print.prototype)
+
+  var fn = obj.inner.print
+  fn(); // num:888,this.num:888
+  // num 作用域链向上搜索，window
+  // this.num fn()调用，this指向window
+
+  (obj.inner.print)() // num:888,this.num:6
+  // this指向inner
+  console.log(obj.inner.print)
+  // (obj.inner.print = obj.inner.print)(); // num:888,this.num:888
+  // (fn = obj.inner.print)(); // num:888,this.num:888
+  // this指向window
+  console.log(obj.inner.print = obj.inner.print)
+</script>
+
+</html>

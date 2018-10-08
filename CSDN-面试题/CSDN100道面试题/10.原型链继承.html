@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>原型链继承</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 有一个构造函数A，写一个函数B，继承A
+  function A(num) {
+    this.titileName = num
+  }
+  A.prototype = {
+    fn1: function () {},
+    fn2: function () {}
+  }
+
+  // 一种方法
+  function myCreate(P, C) {
+    function F() {};
+    F.prototype = P.prototype
+    C.prototype = new F()
+    Object.defineProperty(C.prototype, 'constructor', {
+      enumerable: false,
+      value: C
+    })
+  }
+
+  function B(num) {
+    A.call(this, num)
+  }
+  myCreate(A, B)
+  console.log(new B(3))
+
+  // 另一种方法
+  function C(num) {
+    A.call(this, num)
+  }
+  C.prototype = Object.create(A.prototype)
+  Object.defineProperty(C.prototype, 'constructor', {
+    enumerable: false,
+    value: C
+  })
+  console.log(new C(3))
+
+</script>
+
+</html>

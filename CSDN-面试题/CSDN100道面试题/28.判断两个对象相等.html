@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>28.判断两个对象相等</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  var obj = {
+    value: 1,
+    string: '1',
+    arr: [123, 1]
+  }
+  var obj2 = {
+    value: 1,
+    string: '1',
+    arr: [123, 1]
+  }
+  var obj3 = {
+    value: '1',
+    string: 1,
+    arr: [123, 1]
+  }
+  console.log(obj == obj2)
+console.log(JSON.stringify(obj) == JSON.stringify(obj2))
+console.log(JSON.stringify(obj2) == JSON.stringify(obj3))
+</script>
+
+</html>

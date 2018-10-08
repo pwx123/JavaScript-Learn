@@ -1,0 +1,59 @@
+第一次循环 
+直接输出：（1）golb1，（2）glob2_promise，（3）glob1_promise
+
+setTimeout 队列
+timeout1，timeout2
+
+setImmediate 队列
+immediate1
+
+nexTick 队列
+（4）glob1_nextTick
+
+Promise 队列
+（5）glob2_then，（6）glob1_then
+
+第二次循环 （执行任务队列中所有的任务 timeou1和timeout2同时执行，新加入的timeout任务在下一次循环执行）
+直接输出：（7）timeout1，（8）timeout1_promise，（9）timeout2，（10）timeout2_promise
+
+setTimeout 队列
+timeout1_timeout1，timeout2_timeout2
+
+setImmediate 队列
+immediate1
+
+nexTick 队列
+（11）timeout1_nextTick，（12）timeout2_nextTick
+
+Promise 队列
+（13）timeout1_then，（14）timeout2_then
+
+第三次循环（timeout1_timeout1，timeout2_timeout2同时执行）
+直接输出：（15）timeout1_timeout1 ，（16）timeout2_timeout2
+
+setTimeout 队列
+
+
+setImmediate 队列
+immediate1，timeout1_setImmediate1，timeout2_setImmediate1
+
+nexTick 队列
+（17）timeout1_timeout1_nextTick，（18）timeout2_timeout2_nextTick
+
+Promise 队列
+
+第四次循环（setImmediate 队列同时执行）
+直接输出：（19）immediate1，（20）immediate1_promise，（21）timeout1_setImmediate1 （22）
+timeout2_setImmediate1
+
+setTimeout 队列
+
+
+setImmediate 队列
+
+
+nexTick 队列
+（23）immediate1_nextTick
+
+Promise 队列
+（24）immediate1_then

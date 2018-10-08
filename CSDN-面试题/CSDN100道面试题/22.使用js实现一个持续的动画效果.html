@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>22.使用js实现一个持续的动画效果</title>
+  <style>
+    #e {
+      width: 50px;
+      height: 50px;
+      background-color: #00f;
+      position: absolute;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h3>requestAnimationFrame</h3>
+  <div id="e"></div>
+</body>
+<script>
+  // var start = null;
+  // var element = document.getElementById("e");
+  // element.style.position = 'absolute';
+
+  // function step(timestamp) {
+  //   if (!start) {
+  //     start = timestamp;
+  //   }
+  //   var progress = timestamp - start;
+  //   element.style.left = Math.min(progress / 10, 200) + 'px';
+  //   if (progress < 2000) {
+  //     window.requestAnimationFrame(step);
+  //   }
+  // }
+  // window.requestAnimationFrame(step);
+
+  window.requestAnimationFrame = (function () {
+    return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      function (callback) {
+        window.setTimeout(callback, 1000 / 60)
+      }
+  })()
+  var e = document.getElementById('e')
+  var flag = true
+  var left = 0
+
+  function render() {
+    if (left == 0) {
+      flag = true
+    } else if (left == 100) {
+      flag = false
+    }
+    flag ? e.style.left = `${left++}px` : e.style.left = `${left--}px`
+  }
+
+  (function animloop(timestamp) {
+    // console.log(timestamp);
+    render()
+    window.requestAnimationFrame(animloop)
+  })()
+
+</script>
+
+</html>

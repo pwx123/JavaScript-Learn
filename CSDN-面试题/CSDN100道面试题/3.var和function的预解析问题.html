@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3.var和function的预解析问题</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 此阶段浏览器只是对var、function、函数形参进行一个解析的准备过程。而且在这个“预解析”过程中，
+  // 有一个预解析先后顺序，即函数的形参 -> function -> var。而且重名时预留函数、后来者覆盖前者。
+  // 预解析结果形参如果有值则解析到值，没有则为underfined，函数则解析到整个函数体，变量都为underfined；
+  // 这道题目中没有参数出现，所以先不讨论。所以这道题在“预解析”时，函数声明权重优先会被提升
+
+  // 提升是在声明之前，重复声明后面覆盖前面
+  console.group('b()')
+
+  function b() {
+    console.log(a)
+    function a() {};
+    var a = 10
+    console.log(a)
+    a = 100
+    console.log(a)
+  }
+  b()
+  console.groupEnd()
+
+  console.group('函数和变量提升,函数优先级高')
+  console.log(g)
+
+  function g() {};
+  var g = 1200
+  console.groupEnd()
+
+  console.group('c()')
+
+  function c() {
+    console.log(a)
+
+    function a() {};
+    var a = 10
+    a = 100
+    console.log(a)
+  }
+  c()
+  console.groupEnd()
+
+  console.group('d()');
+  (function d(num) {
+    console.log(num)
+    // function num(){};
+    var num = 10
+    console.log(num)
+  }(100))
+  console.groupEnd()
+  // (function d(num) {
+  //   console.log(num);
+  //   var num = 10;
+  // })(100); //效果一致
+
+  console.group('f()');
+  (function f(num) {
+    console.log(num)
+
+    function num() {}; // 提升
+    console.log(num)
+    var num = 10
+    console.log(num)
+  }(100))
+  console.groupEnd()
+
+  console.group('m()')
+
+  function m() {
+    console.log(a1) // 变量提升了 不然就报undefined错
+    console.log(a2)
+    console.log(b1)
+    console.log(b2)
+    if (false) {
+      function b1() {};
+      var a1 = 10
+    }
+    if (true) {
+      function b2() {};
+      var a2 = 20
+    }
+    console.log(a1)
+    console.log(a2)
+    console.log(b1)
+    console.log(b2)
+  }
+  m()
+  console.groupEnd()
+
+  console.group('n()')
+
+  function n() {
+    if (2 > 1) {
+      arr = 10 // 报错，因为有let
+      brr = 20
+      let arr
+      var brr
+      console.log(arr)
+      console.log(brr)
+    }
+  }
+  n()
+  console.groupEnd()
+
+</script>
+
+</html>

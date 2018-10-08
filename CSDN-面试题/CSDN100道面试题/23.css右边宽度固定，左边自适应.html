@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>css右边宽度固定，左边自适应</title>
+  <style>
+    .main {
+      display: flex;
+    }
+
+    .left {
+      background-color: blueviolet;
+      height: 200px;
+      flex: 1;
+    }
+
+    .right {
+      background-color: red;
+      height: 200px;
+      width: 200px;
+    }
+
+    .main1 {
+      margin-top: 20px;
+    }
+
+    .left1 {
+      float: right;
+      background-color: red;
+      width: 200px;
+      height: 200px;
+    }
+
+    .right1 {
+      background-color: blueviolet;
+      margin-right: 200px;
+      height: 200px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+  <div class="main1">
+    <div class="left1"></div>
+    <div class="right1"></div>
+  </div>
+</body>
+
+</html>
