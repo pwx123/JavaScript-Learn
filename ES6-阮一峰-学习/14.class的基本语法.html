@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>class的基本语法</title>
+</head>
+
+<body>
+  <script>
+    //只是ES5的语法糖
+    class Point {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+      }
+      toString() { //方法之间不需要逗号分隔，加了会报错。
+        return '(' + this.x + ',' + this.y + ')';
+      }
+    }
+    console.log(Point);
+    console.log(typeof Point);
+    console.log(Point === Point.prototype.constructor);
+    var p = new Point(1, 2);
+    console.log(p.toString());
+    console.log(p);
+    console.log(p.constructor === Point);
+    console.log(Point === Point.prototype.constructor);
+    // class Point1 {
+    //   constructor() {}
+    //   toString() {}
+    //   toValue() {}
+    // }
+    // 等同于
+    // Point1.prototype = {
+    //   constructor() {},
+    //   toString() {},
+    //   toValue() {},
+    // }
+    //属性名可以用表达式
+    console.warn("属性名可以用表达式");
+    let methodName = 'getArea';
+    class Square {
+      constructor(length) {
+          this.length = length;
+        }
+        [methodName]() { //属性名可以用表达式
+          console.log(this.length);
+        }
+    }
+    var s = new Square("length:" + 2);
+    s.getArea();
+
+    //类的内部所有定义的方法 都是不可枚举的（non-enumerable）
+    console.warn("类的内部所有定义的方法不可枚举");
+    console.log(Object.keys(Point.prototype));
+    console.log(Object.getOwnPropertyNames(Point.prototype));
+    //ES5
+    var Point2 = function (x, y) {
+      this.x = x;
+      this.y = y;
+    }
+    Point2.prototype.toString = function () {
+      return '(' + this.x + ',' + this.y + ')';
+    }
+    console.log(Object.keys(Point2.prototype));
+
+    //constructor
+    console.warn("constructor方法");
+    class Point3 {}
+    console.log(Point3.prototype); //自动添加constructor方法
+    //constructor方法默认返回实例对象（即this）
+    console.log(Point3.prototype.constructor);
+    //与 ES5 一样，实例的属性除非显式定义在其本身（即定义在this对象上），否则都是定义在原型上（即定义在class上）。
+    var point = new Point(2, 3);
+    console.log(point.hasOwnProperty('x')); //true this定义在本身
+    console.log(point.hasOwnProperty('toString')); //false
+    console.log(point.__proto__.hasOwnProperty('toString')); //true
+    console.log(p.__proto__ === point.__proto__); //true、
+    console.warn("Class表达式");
+    //class表达式
+    const Myclass = class Me {
+      getClassName() {
+        return Me.name; //Me表示this
+      }
+    }
+    var mclass = new Myclass();
+    console.log(mclass.getClassName()); //Me只在 Class 的内部代码可用，指代当前类。
+    const Myclass1 = { //用不到this 可以这样缩写
+    }
+    //class的静态方法
+    console.warn("class的静态方法");
+    class Foo {
+      static classMethod() {
+        return 'hello';
+      }
+    }
+    console.log(Foo.classMethod()); //只能在Foo上调用
+    var f = new Foo();
+    //console.log(f.classMethod()); //不能在实例上调用
+    //class的继承
+    class ColorPoint extends Point {
+      constructor(x, y, color) {
+        super(x, y); //在子类的构造函数中，只有调用super之后，才可以使用this关键字，否则会报错。
+        this.color = color;
+      }
+      toString() {
+        return this.color + super.toString();
+      }
+    }
+    var cp = new ColorPoint(1, 2, 'red');
+    console.log(cp);
+    console.log(cp.toString());
+    console.log(cp instanceof Point);
+    console.log(cp instanceof ColorPoint);
+    console.log(Object.getPrototypeOf(ColorPoint));
+  </script>
+</body>
+
+</html>

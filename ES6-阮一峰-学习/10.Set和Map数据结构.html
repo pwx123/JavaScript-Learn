@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Set和Map数据结构</title>
+</head>
+
+<body>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <script>
+    console.warn("Set数据结构"); //Set 结构没有键名，只有键值（或者说键名和键值是同一个值）
+    //类似于数组。成员的值是唯一的，不能有重复的值
+    const s = new Set();
+    [1, 2, 2, 3, 4, 4, 5, 5, 6].forEach(x => s.add(x));
+    console.log(s);
+    //Set函数接受一个数组，或者具有 iterable 接口的其他数据结构）
+    const set1 = new Set([1, 2, 3, 3, 3, 4, 5]);
+    console.log(set1);
+    console.log(set1.size);
+    const set2 = new Set(document.querySelectorAll('div'));
+    console.log(set2);
+    //数组去重的方法
+    var array = [1, 2, 3, 4, 4, 4, 4, 5, 5];
+    array = [...new Set(array)]
+    console.log(array);
+    //对象总是不相等的
+    const set3 = new Set();
+    set3.add({});
+    set3.add({});
+    console.log(set3);
+    // add(value)： 添加某个值， 返回 Set 结构本身。
+    // delete(value)： 删除某个值， 返回一个布尔值， 表示删除是否成功。
+    // has(value)： 返回一个布尔值， 表示该值是否为Set的成员。
+    // clear()： 清除所有成员， 没有返回值。
+    const set4 = new Set([12, 3, 4, 4, 56, 3]);
+    set4.add(1).add(2).add(2);
+    console.log(set4);
+    console.log(set4.has(1));
+    set4.delete(3);
+    console.log(set4);
+    set4.clear();
+    console.log(set4);
+    //Set Array.from转化为数组
+    const set5 = new Set([12, 3, 4, 5])
+    console.log(Array.from(set5));
+    //Set的遍历
+    console.log("keys()");
+    for (let item of set5.keys()) { //keys()
+      console.log(item);
+    }
+    console.log("values()");
+    for (let item of set5.values()) { //values()
+      console.log(item);
+    }
+    console.log("entries()");
+    for (let item of set5.entries()) { //entries()
+      console.log(item);
+    }
+    console.log("for of 直接遍历");
+    for (let item of set5) {
+      console.log(item);
+    }
+
+    console.warn("map数据结构");
+    //Object 结构提供了“字符串—值”的对应，Map 结构提供了“值—值”的对应，是一种更完善的 Hash 结构实现。
+    const map1 = new Map();
+    const obj1 = {
+      p: 'Hello world'
+    };
+    map1.set(obj1, 'content');
+    map1.set('test', 'pwx');
+    console.log(map1);
+    console.log(map1.get(obj1)); //Object=>'content'
+    console.log(map1.has('test'));
+    map1.delete('test')
+    console.log(map1);
+    //任何具有 Iterator 接口、且每个成员都是一个双元素的数组的数据结构
+    //（详见《Iterator》一章）都可以当作Map构造函数的参数。这就是说，Set和Map都可以用来生成新的 Map。
+    const set7 = new Set([
+      ['foo', 1],
+      ['bar', 2]
+    ]);
+    const map2 = new Map(set7);
+    console.log(map2);
+    //如果对同一个键多次赋值，后面的值将覆盖前面的值。
+    const map3 = new Map();
+    map3.set(['a'], 555);
+    console.log(map3.get(['a'])); //表面是针对同一个键，但实际上这是两个值，内存地址是不一样的
+    //Map 的键实际上是跟内存地址绑定的
+    //Map的遍历 for of
+    const map4 = new Map([
+      [1, 'one'],
+      [2, 'two'],
+      [3, 'three'],
+    ]);
+    console.log(...map4.keys());
+    console.log(...map4.values());
+    console.log(...map4.entries());
+    console.log(...map4);
+
+    //与其他数据结构的相互转换
+    console.warn("与其他数据结构的相互转换"); //数组
+    console.log([...map4]);
+    const array1 = [
+      [1, '2'],
+      ['1', '2']
+    ];
+    console.log(new Map(array1));
+    //对象 obj[key] = value;
+    //Map 转为 JSON 要区分两种情况。一种情况是，Map 的键名都是字符串，这时可以选择转为对象 JSON。
+    console.warn("Map转JSON");
+
+    function objToStrMap(obj) { //对象转Map
+      let strMap = new Map();
+      for (let k of Object.keys(obj)) {
+        strMap.set(k, obj[k]);
+      }
+      return strMap;
+    }
+
+    function strMapToObj(strMap) { //Map转对象
+      let obj = Object.create(null);
+      for (let [k, v] of strMap) {
+        obj[k] = v;
+      }
+      console.log(obj);
+      return obj;
+    }
+    var map5 = new Map([ //键值为字符
+      ['name', '张三'],
+      ['title', 'Author']
+    ]);
+    console.log(JSON.stringify(strMapToObj(map5))); //Map转JSON 先转换为Object
+    var map6 = new Map([ //键值为非字符
+      [1, 1],
+      [2, 2]
+    ]);
+    console.log(JSON.stringify([...map6])); //转化为数组JSON
+    console.warn("JSON转Map");
+    var json1 = '{"yes": true, "no": false}'; //键值纯字符串
+    console.log(JSON.parse(json1)); //转化为对象
+    console.log(objToStrMap(JSON.parse(json1)));
+    var json2 = '[[true,7],[{"foo":3},["abc"]]]'; //键值为非纯字符串
+    console.log(JSON.parse(json2));
+    console.log(new Map(JSON.parse(json2)));
+  </script>
+</body>
+
+</html>

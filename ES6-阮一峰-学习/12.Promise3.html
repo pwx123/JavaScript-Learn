@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./js/jquery-3.2.1.js"></script>
+  <title>Promise</title>
+</head>
+
+<body>
+  <script>
+    var value = null;
+
+    function loadAsync(url) {
+      return new Promise((resolve, reject) => {
+        value = url;
+        if (value) {
+          resolve(value);
+        } else {
+          reject('error');
+        }
+      })
+    }
+    loadAsync().then((val) => {
+      console.log(val);
+    }, (err) => {
+      console.log(err);
+    });
+    loadAsync('pwx').then((val) => {
+      console.log(val);
+    }, (err) => {
+      console.log(err);
+    });
+  </script>
+</body>
+
+</html>

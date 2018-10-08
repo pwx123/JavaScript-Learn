@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./js/jquery-3.2.1.js"></script>
+  <title>async函数</title>
+</head>
+
+<body>
+  <script>
+    //异步编程的一种解决方案 是 Generator 函数的语法糖
+    function getTest1(url) {
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          url: 'http://localhost:3000/' + url,
+          type: 'GET',
+          dataType: 'jsonp',
+          success: function (data) {
+            if (data) {
+              resolve(data.commentURL);
+            } else {
+              reject('Test1 err');
+            }
+          }
+        })
+      })
+    };
+
+    function getUser(url) {
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          url: url,
+          type: 'GET',
+          dataType: 'jsonp',
+          success: function (data) {
+            if (data) {
+              resolve(data);
+            } else {
+              reject('Test2 err');
+            }
+          }
+        })
+      })
+    };
+
+    async function getUserByTest1(test1) {
+      const url = await getTest1(test1);
+      console.log(url);
+      const usermsg = await getUser(url);
+      console.log(usermsg);
+      return usermsg;
+    };
+
+    getUserByTest1('test1').then((result) => {
+      console.log(result);
+    });
+
+    function timeout(ms) {
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, ms);
+      })
+    };
+
+    async function asyncPrint(value, ms) {
+      await timeout(ms);
+      console.log(value);
+    };
+    asyncPrint('Hello World!', 1000);
+  </script>
+</body>
+
+</html>

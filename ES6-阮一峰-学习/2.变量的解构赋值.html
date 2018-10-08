@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2.变量的解构赋值</title>
+</head>
+
+<body>
+  <script>
+    let [a, b, c] = [1, 2, 3];
+    console.log(a);
+    let [foo, [
+      [bar], baz
+    ]] = [1, [
+      [2], 3
+    ]];
+    let [, , third] = ['1', '2', '3'];
+    console.log(third);
+    let [head, ...tail] = [1, 2, 3, 4];
+    console.log(tail);
+    let [x, y, ...z] = ['a'];
+    console.log(x);
+    console.log(y);
+    console.log(z);
+    let [q, [p], s] = [1, [2, 3], 4]
+    console.log(p);
+    let [test = 1] = [null]; //默认值 只有undefined会忽略
+    console.log(test);
+    let [test1 = 1] = [undefined]
+    console.log(test1);
+    let {
+      tes1,
+      tes2
+    } = {
+      tes1: 'tes1',
+      tes2: 'tes2'
+    }
+    console.log(tes1);
+    let {
+      test2: num
+    } = {
+      test2: 'nums'
+    }
+    console.log(num); //被赋值的是num 而不是test2
+    //函数返回多个值
+    function fun2() {
+      return [1, 2, 3]
+    }
+    console.log(fun2())
+    // [num1, num2, num3] = fun2() num1 is not undefined
+    console.log([num1, num2, num3] = fun2());
+    console.log(num3)
+    let [num11, num22, num33] = [1, 2, 3];
+    console.log(num11);
+    //解析json
+    let jsonData = {
+      id: 41,
+      status: "ok",
+      data: [342, 234]
+    }
+    let {
+      id,
+      status,
+      data: [...num4]
+    } = jsonData;
+    console.log(id, status, num4);
+
+  </script>
+</body>
+
+</html>

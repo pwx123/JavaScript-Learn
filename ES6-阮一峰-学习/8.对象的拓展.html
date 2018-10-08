@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>8.对象的拓展</title>
+</head>
+
+<body>
+  <script>
+    console.warn("1.属性的简洁表示法");
+    const name = 'pwx';
+    const nameObj = {
+      name
+    };
+    console.log(nameObj);
+
+    function fun1(x, y) { //属性简写
+      return {
+        x,
+        y
+      };
+    }
+
+    function fun2(x, y) {
+      return {
+        x: x,
+        y: y
+      };
+    }
+    console.log(fun1(1, 2)); //属性名为变量名 属性值为变量值
+    console.log(fun2(1, 2));
+
+    //方法简写
+    const o = {
+      method() {
+        console.log('方法简写1');
+      }
+    }
+    const o1 = {
+      method: function () {
+        console.log('正常的方法写法');
+      }
+    }
+    o.method();
+    o1.method();
+    //实际的例子
+    var birth = '2001/12/21';
+    const Person = {
+      name: 'pwx',
+      values: { //这种写法为对象里的对象
+        test: '1'
+      },
+      birth,
+      cbirth() { //这种写法为函数的缩写
+        console.log('test:' + birth);
+      }
+    }
+    console.log(Person.values);
+    Person.cbirth();
+
+    function getPoint() {
+      const x = 1;
+      const y = 2;
+      return {
+        x,
+        y
+      };
+    }
+    console.log(getPoint());
+    //CommonJS模块输出一组变量 非常适合简洁写法
+    let ms = {};
+    // module.export = {
+    //   getPoint,
+    //   ms
+    // }
+    var obj1 = {
+      _wheel: 4, //加下划线 表示私有 约定俗成
+      get wheel() {
+        return this._wheel;
+      },
+      set wheel(value) {
+        this._wheel = value;
+      }
+    }
+    console.log(obj1.wheel); //get set 函数用的就是简洁写法
+    console.log(obj1.wheel = 5);
+    //简洁写法的属性名总是字符串
+
+    //属性名表达式
+    console.warn("属性名表达式");
+    var obj2 = {};
+    obj2.foo = true; //直接以标识符作为属性名 
+    console.log(obj2);
+    obj2['a' + 'bc'] = 'pwx'; //如果表达式作为属性名，需要放在中括号中
+    console.log(obj2);
+    let propKey = 'foo';
+    let obj3 = {
+      [propKey]: true, //中括号里可以写变量
+      ['a' + 'bc']: 123
+    }
+    console.log(obj3);
+    let lastWord = 'last word';
+    const a = {
+      'first word': 'hello',
+      [lastWord]: 'world'
+    };
+    console.log(a);
+    console.log(a['first word']); //字符串
+    console.log(a[lastWord]); //变量
+    console.log(a['last word']);
+    //表达式可用于定义方法名
+    let obj4 = {
+      ['a' + 'bcd']() {
+        console.log('定义方法名abcd');
+      }
+    }
+    obj4.abcd();
+
+    console.warn("方法的name属性");
+    const Person1 = {
+      sayName() {
+        console.log("My name is pwx");
+      }
+    }
+    console.log(Person1.sayName.name); //返回函数的名字
+    const obj5 = {
+      x: 'z',
+      get foo1() {
+        return 'x'
+      },
+      set foo1(val) {
+        this.x = val
+      }
+    }
+    console.log(obj5.foo1.name); //undefined
+    const descriptor = Object.getOwnPropertyDescriptor(obj5, 'foo1'); //这样才能获得set get 函数的名字
+
+    console.log(descriptor.get.name); // "get foo"
+    console.log(descriptor.set.name); // "set foo"
+
+    //Object.is() 类似于===
+    console.warn("Object.is()");
+    console.log(NaN == NaN);
+    console.log(NaN === NaN); //===不能判断NaN
+    console.log(Object.is(NaN, NaN));
+    console.dir(-0 === +0); //===不能判断-0 or +0
+    console.log(Object.is(-0, +0));
+
+    //Object.assign() 对象的合并 所有可枚举属性
+    const target = {
+      a: 1
+    };
+    const target1 = {
+      b: 2
+    };
+    const target2 = {
+      c: 3
+    };
+    Object.assign(target, target1, target2); //将后面的合并到第一个
+    console.log(target);
+    console.log(Object.assign(2, 3));
+    const v1 = 'abc';
+    const v2 = true;
+    const v3 = 10;
+    console.log(Object.assign({}, v1, v2, v3)); //字符串会转换
+    //浅拷贝
+    const va1 = {
+      a: {
+        b: 1
+      }
+    }
+    console.log("浅拷贝"); //如果属性是对象 浅拷贝
+    const va2 = Object.assign({}, va1);
+    console.log(va2);
+    va2.a.b = 2;
+    console.log(va2);
+    console.log(va1);
+    //重名的后面的替换前面的
+    console.log(Object.assign([1, 2, 3], [4, 5])); //分解为0:1,1:2; 0:4,1:5 结果为4,5,3
+    const source = {
+      get foo() { //求值函数会运算取值 返回值
+        return 1;
+      }
+    }
+    const target3 = {};
+    console.log(Object.assign(target3, source));
+
+    //属性的可枚举性和遍历
+    console.warn("属性的可枚举性和遍历");
+    var obj6 = {
+      foo: 123,
+      get bar() {
+        return 'abc'
+      }
+    }
+    console.log(Object.getOwnPropertyDescriptor(obj6, 'foo')); //enumerable 可枚举性
+    console.log(Object.getOwnPropertyNames(obj6));
+    // 1.for...in循环： 只遍历对象自身的和继承的可枚举的属性。
+    // 2.Object.keys()： 返回对象自身的所有可枚举的属性的键名。
+    // 3.JSON.stringify()： 只串行化对象自身的可枚举的属性。
+    // 4.Object.assign()： 忽略enumerable为false的属性， 只拷贝对象自身的可枚举的属性。
+    // 5.Object.getOwnPropertyNames返回一个数组，包含对象自身的所有属性（不含 Symbol 属性，但是包括不可枚举属性）的键名。
+    // 6.Reflect.ownKeys返回一个数组，包含对象自身的所有键名，不管键名是 Symbol 或字符串，也不管是否可枚举。
+    // 尽量不要用for...in循环，而用Object.keys()代替。继承的影响
+    console.log(Reflect.ownKeys(obj6));
+    console.log(Object.getOwnPropertyDescriptors(obj6)); //对象所有自身属性（非继承属性）的描述对象
+  </script>
+</body>
+
+</html>

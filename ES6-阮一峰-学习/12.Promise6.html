@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./js/jquery-3.2.1.js"></script>
+  <title>Promise</title>
+</head>
+
+<body>
+  <script>
+    function getJsonpAsync(url) {
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          url: url,
+          type: "GET",
+          dataType: "jsonp", //指定服务器返回的数据类型
+          success: function (data) {
+            console.log(data);
+            var result = data;
+            if (result) {
+              resolve(result);
+            } else {
+              reject(result);
+            }
+            //reject(result);    // reject方法的作用，等同于抛出错误。被catch捕捉 冒泡到最后
+          }
+        });
+      })
+    }
+    // 箭头函数后面不加大括号， 默认只能有一行代码， 默认return;
+    // 箭头函数后面加大括号， 默认没有return;
+    getJsonpAsync("http://localhost:3000")
+      .then(comment => {
+        return getJsonpAsync(comment.commentURL); //加了大括号 要return 才能传给下一个then
+      })
+      .then(msg => console.log(msg.msg + " over"))
+      .catch(reject => console.log("error" + reject))
+      .finally(() => console.log("finally over")); //finally 最后一定执行
+
+    function testReject() {
+      return new Promise((resolve, reject) => {
+        var i = 0;
+        reject("return reject");
+      })
+    };
+    testReject()
+      .then(resolve => console.log('resolve'))
+      .catch(reject => console.log(reject));
+    const someAsyncThing = function () {
+      return new Promise(function (resolve, reject) {
+        // 下面一行会报错，因为x没有声明
+        resolve(x + 2);
+        throw new Error('error0'); //虽然不会被捕捉 但是会中止执行 error不会被抛出
+        setTimeout(function () { //定时器抛出的错误与Promise无关 不会被someAsyncThing catch 捕捉
+          console.log('error1');
+          throw new Error('error1');
+        }, 0);
+      });
+    };
+
+    someAsyncThing().then(function () {
+      console.log('everything is great');
+    });
+
+    setTimeout(() => {
+      console.log(123) //x报错 并没有中断运行
+    }, 2000);
+  </script>
+</body>
+
+</html>

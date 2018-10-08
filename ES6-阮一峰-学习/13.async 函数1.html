@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./js/jquery-3.2.1.js"></script>
+  <title>async函数</title>
+</head>
+
+<body>
+  <script>
+    //异步编程的一种解决方案 是 Generator 函数的语法糖
+    //不要参考 写的不好
+    const getJsonpAsync = async function () {
+      const f1 = await $.ajax({
+        url: "http://localhost:3000",
+        type: "GET",
+        dataType: "jsonp", //指定服务器返回的数据类型
+        success: function (data) {
+          var result = JSON.stringify(data); //json对象转成字符串
+          if (result) {
+            console.log("success1");;
+          } else {
+            console.log("fail1");;
+          }
+        }
+      });
+      const f2 = await $.ajax({
+        url: "http://localhost:3000/users",
+        type: "GET",
+        dataType: "jsonp", //指定服务器返回的数据类型
+        success: function (data) {
+          var result = JSON.stringify(data); //json对象转成字符串
+          if (result) {
+            console.log("success2");;
+          } else {
+            console.log("fail2");;
+          }
+        }
+      });
+      console.log(f1);
+      console.log(f2);
+    };
+    getJsonpAsync();
+  </script>
+</body>
+
+</html>

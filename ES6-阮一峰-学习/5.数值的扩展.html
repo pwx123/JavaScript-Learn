@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>5.数值的扩展</title>
+</head>
+
+<body>
+  <script>
+    // 0b或0B表示二进制 0o或0O表示八进制
+    console.log(0b111110111 === 503);
+    console.log(0o767 === 503);
+    console.log(Number(0b111110111));
+    console.log(isNaN('NaN'));
+    console.log(Number.isNaN('NaN')); //不转换 直接返回false
+    console.log("是否为整数:" + Number.isInteger(14.000)); //判断是否为整数
+    console.log(Math.trunc(4.1)); //返回一个数的整数部分
+    console.log(Math.trunc(-0.1));
+    console.log(Math.trunc()); //返回NaN
+    console.log(2**3); //指数运算
+    console.log(Math.pow(2,3));
+  </script>
+</body>
+
+</html>

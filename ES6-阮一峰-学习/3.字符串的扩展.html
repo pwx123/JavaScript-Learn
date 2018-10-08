@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3.字符串的扩展</title>
+</head>
+
+<body>
+  <script>
+    console.warn("字符编码问题");
+    console.log("\u0061"); //unicode字符
+    //javaScript 内部，字符以 UTF-16 的格式储存，每个字符固定为2个字节。对于那些需要4个
+    //字节储存的字符（Unicode 码点大于0xFFFF的字符），JavaScript 会认为它们是两个字符。
+    var s = "𠮷a";
+    var s1 = '你';
+    var s2 = "𠮷"
+    console.log("𠮷的charCode:" + s2.charCodeAt(0)); //字符编码
+    console.log("𠮷的codePoint:" + s2.codePointAt(0)); //码点
+    console.log("'𠮷a'的字符数:" + s.length);
+    console.log("'你'的字符数:" + s1.length);
+    for (let ch of s) { //for of 可以正确的遍历出字符
+      console.log(ch, ch.codePointAt(0).toString(16));
+      console.log(ch.codePointAt(0) > 0xFFFF);
+    }
+    console.log(String.fromCharCode(0x20BB7)); //formCharCode 不能识别大于 0xFFFF的字符
+    console.log(String.fromCharCode(0x0BB7)); // fromCharCode 0x20887 与 0x0887标识的一致
+    console.log(String.fromCodePoint(0x20BB7)); //可以正确识别
+    console.log(s2.charAt(0)); //只能识别 小于 0xFFFF
+    //console.log(s2.at(0)); 暂未实现
+
+
+    console.warn("字符串常用方法");
+    let s3 = "Hello world!";
+    console.log(s3.startsWith('He'));
+    console.log("第3个字符开始:" + s3.startsWith('He', 3)); //第3个字符开始
+    console.log(s3.endsWith('d!'));
+    console.log("前5个字符:" + s3.endsWith('o', 5)); //endWith 不一样 表示前5个字符
+    console.log(s3.includes('o w')); //第二个参数与startsWith 意思一致
+    console.log('repeat '.repeat(3)); //重复
+
+
+    console.warn('字符串补全');
+    //字符串补全
+    console.log('x'.padStart(5, '0')); //头部补全
+    console.log('x'.padEnd(5, '0')); //尾部补全
+    console.log('x'.padStart(4)); //默认空格补全
+    console.log('09-12'.padStart(10, 'YYYY-MM-DD'));
+    
+    console.log('1 plus 2 equal 3'.match(/\d+/g));
+    //console.log('1 plus 2 equal 3'.matchAll(/\d+/)); 提案
+
+
+    console.warn('模板字符串');
+    var str = `In javascript \`this\` is
+    not legal`; // \` 转义字符表示 '`'
+    console.log(str);
+    var basketCount = 12;
+    var basketSale = '$12'; //嵌入变量 html中保留换行和缩进 ${}中可以调用函数
+    document.write(`There are <b>${basketCount}</b> 
+    items in your basket, <em>${basketSale}</em> are on sale!`)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.let和const命令</title>
+</head>
+
+<body>
+  <script>
+    console.warn('let的使用'); {
+      let a = 1;
+      var b = 2;
+    }
+    //console.log(a); Error a is not defined
+    console.log(b);
+
+    {
+      var a = [];
+      for (var i = 0; i < 10; i++) {
+        a[i] = (function (j) {
+          return function (k) {
+            console.log(j);
+            console.log(k);
+          }
+        })(i);
+      }
+      a[4](1); //闭包
+    }
+
+
+    {
+      var b = [];
+      for (var j = 0; j < 10; j++) {
+        b[j] = function () {
+          console.log(j);
+        }
+      }
+      b[4](); //输出为10
+    }
+
+    {
+      var c = [];
+      for (let k = 0; k < 10; k++) { //k只在1次循环中有效
+        c[k] = function () {
+          console.log(k);
+        }
+      }
+      c[3](); //输出为3
+    }
+
+    {
+      for (let i = 0; i < 3; i++) {
+        let i = 'abc';
+        console.log(i); //输出3个abc 循环变量i与局部变量i,有各自单独的作用域
+      }
+    }
+
+    //不存在变量提升 let const 不提升
+    console.warn("不存在变量提升");
+    console.log(foo); //undefined
+    var foo = 12;
+    //console.log(bar); Error bar is not defined
+    let bar = 12;
+
+
+    //暂时性死区
+    console.warn('暂时性死区') //块中存在let const 如果形成封闭 未声明调用报错
+    var temp = 123;
+    if (true) {
+      //temp = 'abc'; //Error temp is not defined
+      let temp;
+    }
+
+    function bar1(x = y, y = 2) {
+      return [x, y]
+    }
+    //bar1(); Error y is not defined
+    function func(a) { //函数内部重复声明a也会报错
+      let a = 10;
+      var a = 1;
+    } //运行会报错 不能重复声明
+
+    var tmp = new Date();
+
+    function f() {
+      console.log(tmp); //undefined
+      if (false) {
+        var tmp = 'hello world'; //var 变量提升 
+      }
+    }
+
+    f();
+
+
+    console.warn('ES6的块级作用域');
+
+    function f1() {
+      let n = 5;
+      if (true) {
+        let n = 10;
+      }
+      console.log(n); // 5 外层n不受内层n影响
+    }
+    f1();
+
+
+    console.warn('const命令');
+    const PI = 3.1415;
+    console.log(PI);
+    //PI=3; Error 不能修改
+    //const NUM Error 必须赋值
+    if (true) {
+      const MAX = 5;
+    }
+    //console.log(MAX); //Error 类似于let 块级作用域有效
+    if (true) {
+      //console.log(MIN); //暂时性死区
+      const MIN = 1;
+    }
+
+    const foo1 = {};
+    foo1.prop = 123;
+    console.log(foo1.prop); //const 保证内存地址不可改动 但对象存的是内存地址 只能保证此指针是固定的 不能保证指针指向的值不变
+
+
+    console.warn('顶层对象属性');
+    var num1 = 1;
+    console.log(num1 === window.num1);
+    let num2 = 1; //let 声明的变量不属于顶层对象属性
+    console.log(num2 === window.num2);
+
+  </script>
+</body>
+
+</html>

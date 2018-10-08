@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>6.函数的扩展</title>
+</head>
+
+<body>
+  <script>
+    //为函数设置默认值
+    function log(x, y = 'world') {
+      console.log(x, y);
+    }
+    log('hello');
+    // function log1(x,x,y='1'){ //报错 有默认值的不能重名
+    // }
+    console.log((function (a, b, c = 1) {}).length);
+    console.log((function (a = 1, b, c = 1) {}).length);
+
+
+    //rest参数
+    console.warn('rest参数');
+
+    function add(...values) { //替代了arguments操作
+      let sum = 0;
+      console.log(values);
+      for (var val of values) {
+        sum += val;
+      }
+      return sum;
+    }
+    console.log(add(1, 2, 3));
+
+    var sortArray = (...num) => num.sort();
+    console.log(sortArray(1, 2, 3, 2));
+
+
+    //箭头函数
+    console.warn('箭头函数');
+    var f = (num1, num2) => num1 + num2; //两个效果一样
+    var f1 = function (num1, num2) {
+      return num1 + num2
+    }
+
+    let getTempItem = id => ({ //返回对象要加括号
+      id: id,
+      name: "Temp"
+    });
+    console.log(getTempItem("pwx"));
+    console.warn('result')
+    var result = [2, 3, 451, 3].sort((a, b) => {
+      console.log(this);
+      return a - b;
+    })
+    console.log(result);
+    //箭头函数的this指向问题
+    var s2 = 0;
+
+    function Timer() {
+      this.s1 = 0;
+      this.s2 = 0;
+      this.s3 = 0;
+      var _this = this; //ES5 将this赋值给_this 可以在普通函数里调用Timer里的变量及方法
+      setInterval(() => {
+        //console.log(this); //Timer
+        this.s1++;
+      }, 1000);
+      setInterval(function () {
+        //console.log(this); //Windows
+        this.s2++;
+      }, 1000);
+      setInterval(function () {
+        _this.s3++;
+      }, 1000)
+    }
+    var timer = new Timer();
+    setTimeout(() => console.log('s1:', timer.s1), 3100); //箭头函数this 指向绑定定义时所在的作用域 即Timer函数
+    setTimeout(() => {
+      console.log('s2:', timer.s2);
+      console.log(s2);
+    }, 3100); //普通函数this 指向运行时的作用域/调用这个函数的对象 即window
+    setTimeout(() => console.log('s3:', timer.s3), 3100);
+
+
+    function foo() {
+      setTimeout(() => { //箭头函数没有arguments 此arguments是foo()的
+        console.log('args:', arguments);
+      }, 100)
+    }
+    foo(1, 2, 3, 4);
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./js/jquery-3.2.1.js"></script>
+  <title>Promise</title>
+</head>
+
+<body>
+  <script>
+    //异步编程的一种解决方案
+    var i = 1;
+    var timer = setInterval(() => {
+      console.log(i);
+      i++;
+      if (i == 4) {
+        clearInterval(timer);
+      }
+    }, 1000)
+    const p1 = new Promise((resolve, reject) => {
+      setTimeout(() => reject(new Error('fail')), 3000);
+    });
+    const p2 = new Promise((resolve, reject) => {
+      setTimeout(() => resolve(p1), 1000);
+    });
+    p2
+      .then(result => console.log(result), error => console.log(error))
+      .catch(error => console.log(error));
+    // 由于p2返回的是另一个 Promise， 导致p2自己的状态无效了， 由p1的状态决定p2的状态。
+    // 所以， 后面的then语句都变成针对后者（ p1）。 又过了 2 秒， p1变为rejected， 导致触发catch方法指定的回调函数。
+    new Promise((resolve, reject) => { //resolve并不会中断函数的运行
+      resolve('并不会中断');
+      console.log("运行");
+    }).then(v => console.log(v));
+  </script>
+</body>
+
+</html>
