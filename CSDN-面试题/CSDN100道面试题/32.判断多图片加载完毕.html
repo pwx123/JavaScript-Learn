@@ -10,7 +10,8 @@
 </head>
 
 <body>
-  <img src="http://img.zcool.cn/community/01c53f5567f0930000016756edc878.jpg@1280w_1l_2o_100sh.png" alt="" id="pic1" class="pic">
+  <img src="http://img.zcool.cn/community/01c53f5567f0930000016756edc878.jpg@1280w_1l_2o_100sh.png" alt="" id="pic1"
+       class="pic">
   <img src="http://img.taopic.com/uploads/allimg/120727/201995-120HG1030762.jpg" alt="" id="pic2" class="pic">
   <img src="http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg" alt="" id="pic3" class="pic">
 </body>
@@ -22,10 +23,19 @@
     pics[i].onload = function () {
       counter++
       // console.log('pic' + i + ' is load')
+      isLoad();
     }
   }
 
-  function allLoad (callback) {
+  function isLoad() {
+    if (counter < pics.length) {
+      console.log('load over' + counter + ' pic')
+    } else {
+      console.log('over')
+    }
+  }
+
+  function allLoad(callback) {
     if (counter < pics.length) {
       console.log('load over' + counter + ' pic')
       setTimeout(allLoad, queryInterval, callback)
@@ -34,10 +44,12 @@
       callback()
     }
   }
-  function callback () {
+
+  function callback() {
     console.log('load over')
   }
-  setTimeout(allLoad, queryInterval, callback)
+  //setTimeout(allLoad, queryInterval, callback)
+
 </script>
 
 </html>

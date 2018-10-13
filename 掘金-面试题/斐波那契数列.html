@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>斐波那契数列</title>
+</head>
+
+<body>
+  <p>斐波那契数列从第三项开始，每一项都等于前两项之和。指的是这样一个数列：0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144 …</p>
+  <h3>Q：得到数列中第n项指向的数值是多少？</h3>
+</body>
+<script>
+  function fib(n) {
+    if (n === 2 || n === 1) {
+      return n - 1;
+    }
+    return fib(n - 1) + fib(n - 2);
+  }
+  console.log(fib(10));
+
+</script>
+
+</html>

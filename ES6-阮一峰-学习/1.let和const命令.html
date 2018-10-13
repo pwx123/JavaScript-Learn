@@ -9,6 +9,9 @@
 </head>
 
 <body>
+  <div>
+    <a href="https://segmentfault.com/a/1190000003114255">链接</a>
+  </div>
   <script>
     console.warn('let的使用'); {
       let a = 1;
@@ -93,8 +96,14 @@
     }
 
     f();
+    console.log('fn2()');
+    var tmp1 = new Date();
 
-
+    function f2() {
+      console.log(tmp1);
+      var temp1 = 'hello';
+    }
+    f2();
     console.warn('ES6的块级作用域');
 
     function f1() {
