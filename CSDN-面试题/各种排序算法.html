@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>各种排序算法</title>
+</head>
+
+<body>
+  <script>
+    // 冒泡排序
+    function bubbleSort(arr) {
+      var len = arr.length;
+      for (let i = 0; i < len; i++) {
+        for (let j = 0; j < len - i - 1; j++) {
+          if (arr[j] > arr[j + 1]) {
+            [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
+          }
+        }
+      }
+      return arr;
+    }
+    var arr = [1, 3, 5, 12, 56];
+    console.log(bubbleSort(arr));
+
+    // 选择排序
+    function selectionSort(arr) {
+      var len = arr.length;
+      let minIndex;
+      for (let i = 0; i < len; i++) {
+        minIndex = i;
+        for (let j = i + 1; j < len; j++) {
+          if (arr[j] < arr[minIndex]) {
+            minIndex = j;
+          }
+        }
+        if (minIndex === i) {
+          continue;
+        } else {
+          [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]
+        }
+      }
+      return arr;
+    }
+    var arr = [1, 3, 5, 1, 5, 3, 6];
+    console.log(selectionSort(arr));
+
+
+    // 快速排序
+    function quickSort(arr, left, right) {
+      let len = arr.length;
+      let partitionIndex;
+      left = typeof left !== 'number' ? 0 : left;
+      right = typeof right !== 'number' ? len - 1 : right;
+      if (left < right) {
+        partitionIndex = partition(arr, left, right);
+        quickSort(arr, left, partitionIndex - 1);
+        quickSort(arr, partitionIndex + 1, right);
+      }
+      return arr;
+    }
+
+    function partition(arr, left, right) { //分区操作
+      let pivot = left; //设定基准值（pivot）
+      let index = pivot + 1;
+      for (let i = index; i <= right; i++) {
+        if (arr[i] < arr[pivot]) {
+          [arr[i], arr[index]] = [arr[index], arr[i]];
+          index++;
+        }
+      }
+      [arr[pivot], arr[index - 1]] = [arr[index - 1], arr[pivot]];
+      return index - 1;
+    }
+    var arr = [1, 3, 5, 1, 5, 3, 6, 8, 9];
+    console.log(quickSort(arr));
+
+  </script>
+</body>
+
+</html>
