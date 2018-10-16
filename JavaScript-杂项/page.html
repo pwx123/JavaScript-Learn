@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>page</title>
+</head>
+
+<body>
+  <p>现有一个Page类,其原型对象上有许多以post开头的方法(如postMsg);另有一拦截函数chekc,只返回ture或false.请设计一个函数,该函数应批量改造原Page的postXXX方法,在保留其原有功能的同时,为每个postXXX方法增加拦截验证功能,当chekc返回true时继续执行原postXXX方法,返回false时不再执行原postXXX方法</p>
+</body>
+<script>
+  function Page() {
+
+  }
+  Page.prototype = {
+    postA: function (a) {
+      console.log('postA:' + a);
+    },
+    postB: function (b) {
+      console.log('postB:' + b);
+    },
+    postC: function (c) {
+      console.log('postC:' + c);
+    },
+    check: function () {
+      return Math.random() > 0.5;
+    }
+  }
+
+  function setCheck(Page) {
+    var obj = Page.prototype;
+    for (let key in obj) {
+      if (key.indexOf('post') === 0 && typeof obj[key] === 'function') {
+        let fn = obj[key];
+        obj[key] = function () {
+          if (obj.check()) {
+            fn.apply(obj, arguments)
+          } else {
+            return false;
+          }
+        }
+      }
+    }
+  }
+  setCheck(Page);
+  var p = new Page();
+  p.postA('a');
+  p.postB('b');
+  p.postC('c');
+
+</script>
+
+</html>

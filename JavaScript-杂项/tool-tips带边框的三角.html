@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>tool-tips</title>
+  <style>
+    .tool-tips {
+      width: 270px;
+      height: 30px;
+      line-height: 30px;
+      border: 1px solid #85ccff;
+      box-shadow: 0px 2px 6px #333;
+      padding: 0 10px;
+      position: relative;
+    }
+
+    .known {
+      color: #85ccff;
+    }
+
+    .triangle {
+      position: absolute;
+      padding: 8px;
+      left: 10px;
+      top: -16px;
+    }
+
+    .triangle::before {
+      content: '';
+      position: absolute;
+      z-index: 999;
+      top: 0;
+      width: 0;
+      height: 0;
+      border: 8px solid transparent;
+      border-bottom-color: #fff;
+    }
+
+    .triangle::after {
+      content: '';
+      position: absolute;
+      z-index: 888;
+      top: -1px;
+      width: 0;
+      height: 0;
+      border: 8px solid transparent;
+      border-bottom-color: #85ccff;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="tool-tips" id="tips">
+    <span>商铺新功能装修上线了！</span>
+    <span class="known" id="known">我知道了</span>
+    <span class="close" id="close">×</span>
+    <div class="triangle"></div>
+  </div>
+  <script>
+    let tips = document.getElementById('tips');
+
+    function setTips() {
+      let known = document.getElementById('known');
+      let close = document.getElementById('close');
+      known.onclick = function () {
+        tips.style.display = 'none';
+        let data = new Date();
+        let dataArr = [data.getFullYear(), data.getMonth(), data.getDate()];
+        localStorage.setItem('showTips', dataArr);
+      }
+      close.onclick = function () {
+        tips.style.display = 'none';
+        localStorage.setItem('showTips', 'nerver');
+      }
+    }
+    let data = new Date();
+    let dataArr = [data.getFullYear(), data.getMonth(), data.getDate()];
+    let nowTime = localStorage.getItem('showTips');
+    if (nowTime === dataArr.toString() || nowTime === 'nerver') {
+      tips.style.display = 'none';
+    } else {
+      setTips();
+    }
+
+  </script>
+</body>
+
+</html>
