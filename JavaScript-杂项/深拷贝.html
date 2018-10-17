@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>深拷贝</title>
+</head>
+
+<body>
+  <script>
+    function deepCopy(obj) {
+      if (!obj || typeof obj !== 'object') {
+        throw new Error('error arguments', 'shallowClone');
+      }
+      var targetObj = obj.constructor === Array ? [] : {};
+      for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          if (obj[key] && typeof obj[key] === 'object') {
+            targetObj[key] = obj[key].constructor === Array ? [] : {};
+            targetObj[key] = deepCopy(obj[key]);
+          } else {
+            targetObj[key] = obj[key];
+          }
+        }
+      }
+      return targetObj;
+    }
+    var a = {
+      name: 'pwx',
+      work: {
+        name: 'z'
+      }
+    }
+    var b = deepCopy(a);
+    console.log(b);
+
+  </script>
+</body>
+
+</html>

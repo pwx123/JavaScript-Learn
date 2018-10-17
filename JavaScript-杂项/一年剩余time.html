@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>一年剩余time</title>
+  <style>
+    span {
+      color: red;
+      padding: 0 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="time">
+    <span id="year"></span>年还剩<span id="day"></span>天<span id="hour"></span>时<span id="minute"></span>分<span id="second"></span>秒
+  </div>
+  <script>
+    function getLastTime() {
+      let yearDom = document.getElementById('year');
+      let dayDom = document.getElementById('day');
+      let hourDom = document.getElementById('hour');
+      let minuteDom = document.getElementById('minute');
+      let secondDom = document.getElementById('second');
+      let nowTime = Date.now();
+      let nowYear = new Date().getFullYear();
+      let yearTime = new Date(nowYear + 1, 0, 1, 0, 0, 0, 0);
+      let detalTime = yearTime - nowTime;
+      let oneDay = 24 * 60 * 60 * 1000;
+      let oneHour = 60 * 60 * 1000;
+      let oneMinute = 60 * 1000;
+      let oneSecond = 1000;
+      let day = parseInt(detalTime / oneDay);
+      let lastHour = detalTime % oneDay;
+      let hour = parseInt(lastHour / oneHour);
+      let lastMinute = lastHour % oneHour;
+      let minute = parseInt(lastMinute / oneMinute);
+      let lastSecond = lastMinute % oneMinute;
+      let second = parseInt(lastSecond / oneSecond);
+      setValue(yearDom, nowYear);
+      setValue(dayDom, day);
+      setValue(hourDom, hour);
+      setValue(minuteDom, minute);
+      setValue(secondDom, second);
+
+    }
+
+    function setValue(ele, value) {
+      let eleValue = ele.innerHTML;
+      if (eleValue == value) {
+        return;
+      } else {
+        ele.innerHTML = value;
+      }
+    }
+    getLastTime();
+    setInterval(getLastTime, 1000);
+
+  </script>
+</body>
+
+</html>

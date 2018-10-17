@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>扁平化数组</title>
+</head>
+
+<body>
+  <script>
+    function flat(arr, result) {
+      for (let i = 0; i < arr.length; i++) {
+        if (typeof arr[i] === 'object') {
+          flat(arr[i], result);
+        } else {
+          result.push(arr[i]);
+        }
+      }
+    }
+    let result = [];
+    let arr = [1, [2, 3], 3, [1, [2, 3], 4]];
+    flat(arr, result);
+    console.log(result)
+
+  </script>
+</body>
+
+</html>
