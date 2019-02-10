@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2-正则表达式位置匹配攻略</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 正则表达式是匹配模式，要么匹配字符，要么匹配位置
+  // 在 ES5 中，共有 6 个锚：
+  // ^、$、\b、\B、(?=p)、(?!p)
+
+  console.log('^ 和 $');
+  // ^ 匹配开头，在多行匹配中匹配行开头
+  // $ 匹配结尾，在多行匹配中匹配行结尾
+  var result = "hello".replace(/^|$/g, '#');
+  console.log(result);
+  var result = "I\nlove\njavascript".replace(/^|$/gm, '#');
+  console.log(result);
+
+  console.log('\\b 和 \\B');
+  // \b 是单词边界，具体就是 \w 与 \W 之间的位置，也包括 \w 与 ^ 之间的位置，和 \w 与 $ 之间的位置。
+  var result = "[JS] Lesson_01.mp4".replace(/\b/g, '#');
+  console.log(result);
+
+  // \B 就是 \b 的反面的意思，非单词边界。例如在字符串中所有位置中，扣掉 \b，剩下的都是 \B 的。
+  // 具体说来就是 \w 与 \w、 \W 与 \W、^ 与 \W，\W 与 $ 之间的位置。
+  var result = "[JS] Lesson_01.mp4".replace(/\B/g, '#');
+  console.log(result);
+
+  console.log('(?=p) 和 (?!p)');
+  // 正向先行断言和负向先行断言。
+  // (?=p) 就是 p 前面的那个位置。
+  // (?!l) 不是 p 前面的那个位置
+  // (?<=p) 就是 p 后面的那个位置。
+  // (?<!p) 不是 p 后面的那个位置。
+  var result = "hello".replace(/(?=l)/g, '#');
+  console.log(result);
+  var result = "hello".replace(/(?!l)/g, '#');
+  console.log(result);
+  var result = "hello".replace(/(?<=l)/g, '#');
+  console.log(result);
+  var result = "hello".replace(/(?<!l)/g, '#');
+  console.log(result);
+  // 把位置理解空字符，是对位置非常有效的理解方式。
+
+  console.log('不匹配任何东西的正则');
+  var regex = /.^/;
+  // 因为此正则要求只有一个字符，但该字符后面是开头，而这样的字符串是不存在的。
+
+  console.log('数字的千位分隔符表示法');
+  var regex = /(?=\d{3}$)/g;
+  var result = "12345678".replace(regex, ',')
+  console.log(result);
+  var regex = /(?=(\d{3})+$)/g;
+  var result = "123456789".replace(regex, ',')
+  console.log(result);
+  var regex = /(?!^)(?=(\d{3})+$)/g;
+  var result = "123456789".replace(regex, ',')
+  console.log(result);
+
+  var string = "12345678 123456789";
+  var regex = /\B(?=(\d{3})+\b)/g;
+  var result = string.replace(regex, ',')
+  console.log(result);
+
+  console.log('格式化');
+
+  function formatMoney(num) {
+    return num.toFixed(2).replace(/\B(?=(\d{3})+\b)/g, ',').replace(/^/, '$ ');
+  }
+  console.log(formatMoney(1888));
+
+  console.log('密码验证问题');
+  // 判断是否包含有某一种字符
+  var regex = /(?=.*[0-9])^[0-9a-zA-Z]{6,12}$/; // 必须包含数字
+  console.log(regex.test('123abc'));
+  console.log(regex.test('abc'));
+  var regex = /(?=.*[0-9])(?=.*[a-z])^[0-9a-zA-Z]{6,12}$/; // 必须包含数字和小写字母
+  console.log(regex.test('123abc'));
+  console.log(regex.test('123ABC'));
+  // (?=.*[0-9]) 表示该位置后面的字符匹配 .*[0-9]，即，有任何多个任意字符，后面再跟个数字。
+  // 翻译成大白话，就是接下来的字符，必须包含个数字。
+
+  // 不能全部都是数字
+  var regex = /(?!^[0-9]{6,12}$)^[0-9A-Za-z]{6,12}$/;
+  console.log(regex.test('1232133'));
+  // /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/ 必须包含字母和数字
+</script>
+
+</html>
