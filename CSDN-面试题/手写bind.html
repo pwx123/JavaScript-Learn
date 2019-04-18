@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>手写bind</title>
+</head>
+<body>
+
+</body>
+<script>
+  Function.prototype.selfBind = function (args) {
+    if (typeof this !== "function") {
+      return false;
+    }
+    let _this = this;
+    let selfArgs = Array.prototype.slice.call(arguments, 1);
+    return function () {
+      return _this.apply(args, selfArgs.concat(Array.prototype.slice.call(arguments)));
+    };
+  };
+
+  function add(c) {
+    return this.a + this.b + c;
+  }
+
+  let obj = {
+    a: 1,
+    b: 2
+  };
+
+  console.log(add.selfBind(obj)(3));
+</script>
+</html>

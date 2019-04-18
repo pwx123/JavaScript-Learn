@@ -31,9 +31,9 @@
   }
 
   function insertArr(arr, value) {
-    if (value == arr[0]) {
+    if (value <= arr[0]) {
       arr.unshift(val)
-    } else if (value == arr[arr.length - 1]) {
+    } else if (value >= arr[arr.length - 1]) {
       arr.push(val)
     } else {
       let index = arrIndex(arr, value)

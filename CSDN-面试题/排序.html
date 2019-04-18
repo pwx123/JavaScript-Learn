@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>排序算法</title>
+</head>
+<body>
+
+</body>
+<script>
+  let arr = [2, 1, 5, 23, 4, 23, 7, 24, 88, 568, 2, 7, 4, 8, 52, 245, 14];
+
+  // 冒泡排序
+  function bubbleSort(arr) {
+    console.time("冒泡排序");
+    if (Object.prototype.toString.call(arr) !== "[object Array]") {
+      return false;
+    }
+    for (let i = 0, iLen = arr.length; i < iLen; i++) {
+      for (let j = 0; j < iLen - 1 - i; j++) {
+        if (arr[j] > arr[j + 1]) {
+          let temp = arr[j + 1];
+          arr[j + 1] = arr[j];
+          arr[j] = temp;
+        }
+      }
+    }
+    console.timeEnd("冒泡排序");
+    return arr;
+  }
+
+  console.log(bubbleSort(arr));
+
+  // 选择排序
+  function selectSort(arr) {
+    console.time("选择排序");
+    if (Object.prototype.toString.call(arr) !== "[object Array]") {
+      return false;
+    }
+    let minIndex;
+    for (let i = 0, iLen = arr.length; i < iLen - 1; i++) {
+      minIndex = i;
+      for (let j = i + 1; j < iLen; j++) {
+        if (arr[j] < arr[minIndex]) {
+          minIndex = j;
+        }
+      }
+      if (minIndex !== i) {
+        let temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+      }
+    }
+    console.timeEnd("选择排序");
+    return arr;
+  }
+
+  arr = [2, 1, 5, 23, 4, 23, 7, 24, 88, 568, 2, 7, 4, 8, 52, 245, 14];
+  console.log(selectSort(arr));
+
+  //插入排序
+  function insertSort(arr) {
+    console.time("插入排序");
+    if (Object.prototype.toString.call(arr) !== "[object Array]") {
+      return false;
+    }
+    for (let i = 1, iLen = arr.length; i < iLen; i++) {
+      let val = arr[i];
+      let j = i - 1;
+      while (j >= 0 && arr[j] > val) {
+        arr[j + 1] = arr[j];
+        j--;
+      }
+      arr[j + 1] = val;
+    }
+    console.timeEnd("插入排序");
+    return arr;
+  }
+
+  arr = [2, 1, 5, 23, 4, 23, 7, 24, 88, 568, 2, 7, 4, 8, 52, 245, 14];
+  console.log(insertSort(arr));
+
+
+  // 快速排序
+  function quickSort(arr, left, right) {
+    if (Object.prototype.toString.call(arr) !== "[object Array]") {
+      return false;
+    }
+    if (left < right) {
+      let x = arr[right];
+      let i = left - 1;
+      let temp;
+      for (let j = left; j <= right; j++) {
+        if (arr[j] <= x) {
+          i++;
+          temp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = temp;
+        }
+      }
+      quickSort(arr, left, i - 1);
+      quickSort(arr, i + 1, right);
+    }
+    return arr;
+  }
+  arr = [2, 1, 5, 23, 4, 23, 7, 24, 88, 568, 2, 7, 4, 8, 52, 245, 14];
+  console.log(quickSort(arr, 0, arr.length - 1));
+</script>
+</html>
