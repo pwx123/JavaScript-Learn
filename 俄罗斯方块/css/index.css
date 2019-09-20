@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+.main {
+  width: 288px;
+  height: 576px;
+  border: 2px solid #000;
+  margin-left: 50px;
+  margin-top: 20px;
+  font-size: 0;
+  float: left;
+}
+
+.score {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #000;
+  margin-left: 50px;
+  margin-top: 20px;
+  float: left;
+  padding: 10px;
+}
+
+.score .restart {
+  margin-top: 10px;
+}
+
+.column li {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  margin: 2px;
+  background-color: #eee;
+}
+.column li.active{
+  background-color: rgb(55, 105, 243);
+}
